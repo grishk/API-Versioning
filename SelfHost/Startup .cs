@@ -9,10 +9,10 @@ using Microsoft.OData;
 using Microsoft.OData.UriParser;
 using Microsoft.Web.Http.Versioning;
 using Microsoft.Web.Http.Versioning.Conventions;
+using Newtonsoft.Json.Serialization;
 using Owin;
 using SeparateControllers.Models;
 using Swashbuckle.Application;
-using Swashbuckle.OData;
 using static Microsoft.AspNet.OData.Query.AllowedQueryOptions;
 using static Microsoft.OData.ODataUrlKeyDelimiter;
 using static Microsoft.OData.ServiceLifetime;
@@ -37,7 +37,7 @@ namespace SelfHost
                     cfg.ReportApiVersions = true;
                 }
             );
-
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             var modelBuilder = new VersionedODataModelBuilder(config)
             {
                 ModelConfigurations =
