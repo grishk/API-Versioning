@@ -9,5 +9,6 @@ namespace SeparateControllers.Models
         {
             builder.EntitySet<Person>("people").EntityType.HasKey(p => p.Id);
         }
+        
     }
 }
