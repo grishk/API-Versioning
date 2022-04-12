@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeparateControllers", "Sepa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfHost", "SelfHost\SelfHost.csproj", "{1756958D-41B7-4D8A-BA42-702E6B862A88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfHost2", "SelfHost2\SelfHost2.csproj", "{369BB40E-9BC1-4580-99D4-E6F0B418E84A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1756958D-41B7-4D8A-BA42-702E6B862A88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1756958D-41B7-4D8A-BA42-702E6B862A88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1756958D-41B7-4D8A-BA42-702E6B862A88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{369BB40E-9BC1-4580-99D4-E6F0B418E84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{369BB40E-9BC1-4580-99D4-E6F0B418E84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{369BB40E-9BC1-4580-99D4-E6F0B418E84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{369BB40E-9BC1-4580-99D4-E6F0B418E84A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

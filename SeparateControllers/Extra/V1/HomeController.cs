@@ -1,15 +1,17 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.Web.Http;
+using SeparateControllers.Models;
 
 namespace SeparateControllers.Extra.V1
 {
     [ApiVersion("1.0")]
-    [ControllerName("home")]
+    [ODataRoutePrefix("Home")]
     //[Route("api/v{version:apiVersion}/home/{?id}")]
-    public class HomeController : ApiController
+    public class HomeController : ODataController
     {
         public HomeController()
         {
@@ -20,7 +22,7 @@ namespace SeparateControllers.Extra.V1
             return "HomeV1";
         }
 
-       
+        
     }
 
   

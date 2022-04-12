@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Examples.Models
+﻿namespace SeparateControllers.Models
 {
     using Microsoft.AspNet.OData.Builder;
     using Microsoft.AspNet.OData.Query;
@@ -29,7 +29,7 @@
         /// Gets or sets the date and time when the order becomes effective.
         /// </summary>
         /// <value>The order's effective date.</value>
-        public DateTime EffectiveDate { get; set; } = DateTime.Now;
+        public DateTime? EffectiveDate { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the ordering customer.
@@ -42,7 +42,7 @@
         /// Gets or sets a description for the order.
         /// </summary>
         /// <value>The description of the order.</value>
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
 
         /// <summary>
         /// Gets a list of line items in the order.

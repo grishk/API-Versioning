@@ -5,10 +5,13 @@ using System.Web.Http;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Web.Http;
 
 
 namespace SeparateControllers.Extra
 {
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ODataRoutePrefix("addresses")]
     public class AddressController : ODataController
     {

@@ -10,6 +10,7 @@ namespace SeparateControllers.Extra.V2
     public class PeopleController : ODataController
     {
         [ODataRoute("{id}")]
+        
         public IHttpActionResult Get([FromODataUri] int id)
         {
             return Ok(new Person(id){Desc = "V2"});

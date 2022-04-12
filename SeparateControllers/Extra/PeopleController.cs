@@ -35,5 +35,16 @@ namespace SeparateControllers.Extra
         {
             return Ok(new[] {new Person { Desc = "V4" } });
         }
+
+        [MapToApiVersion("5.0-alpha"), ODataRoute]
+        public IList<Order> GetV5()
+        {
+            return new[]
+            {
+                new Order{Id = 1},
+                new Order{Id = 2},
+                new Order{Id = 3}
+            };
+        }
     }
 }

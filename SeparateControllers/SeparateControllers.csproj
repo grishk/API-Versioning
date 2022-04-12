@@ -168,6 +168,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HttpExtensions\ApiControllerExtensions.cs" />
     <Compile Include="Extra\AddressController.cs" />
     <Compile Include="Extra\PeopleController.cs" />
     <Compile Include="Extra\V1\HomeController.cs" />
@@ -175,6 +176,10 @@
     <Compile Include="Extra\V2\HomeController.cs" />
     <Compile Include="Extra\V2\PeopleController.cs" />
     <Compile Include="Extra\ValuesController.cs" />
+    <Compile Include="HttpExtensions\EnumerableExtensions.cs" />
+    <Compile Include="HttpExtensions\HttpRequestMessageExtensions.cs" />
+    <Compile Include="Models\AddressesConfiguration.cs" />
+    <Compile Include="Models\AllConfigurations.cs" />
     <Compile Include="Models\DataModelConfiguration.cs" />
     <Compile Include="Models\LineItem.cs" />
     <Compile Include="Models\Order.cs" />
@@ -185,5 +190,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -50,7 +50,7 @@ namespace SelfHost
             var models = modelBuilder.GetEdmModels();
             config.Count();
             //config.MapVersionedODataRoute("odata-bypath", "odata/v{apiVersion}", models, ConfigureContainer);
-            config.MapVersionedODataRoute("odata-bypath", "api", models, ConfigureContainer);
+            config.MapVersionedODataRoute("odata", "api", models, ConfigureContainer);
             
             var apiExplorer = config.AddODataApiExplorer(o =>
             {

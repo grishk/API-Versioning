@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Examples.Models
+﻿namespace SeparateControllers.Models
 {
     using Microsoft.AspNet.OData.Query;
     using System;
