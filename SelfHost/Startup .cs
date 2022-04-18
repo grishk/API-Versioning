@@ -26,55 +26,60 @@ namespace SelfHost
         public void Configuration(IAppBuilder appBuilder)
         {
             HttpConfiguration config = new HttpConfiguration();
-            var httpServer = new HttpServer(config);
-            
+
+            config.Routes.MapHttpRoute(
+               name: "DefaultApi",
+               routeTemplate: "api/{controller}/{id}",
+               defaults: new { id = RouteParameter.Optional }
+           );
+
             // Web API configuration and services
-            config.AddApiVersioning(
-                cfg =>
-                {
-                    //cfg.ApiVersionReader = ApiVersionReader.Combine(new QueryStringApiVersionReader(), new UrlSegmentApiVersionReader());
-                    //cfg.Conventions.Add(new VersionByNamespaceConvention());
-                    cfg.ReportApiVersions = true;
-                }
-            );
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            var modelBuilder = new VersionedODataModelBuilder(config)
-            {
-                ModelConfigurations =
-                {
-                    new DataModelConfiguration()
-                }
-            };
+            //config.AddApiVersioning(
+            //    cfg =>
+            //    {
+            //        //cfg.ApiVersionReader = ApiVersionReader.Combine(new QueryStringApiVersionReader(), new UrlSegmentApiVersionReader());
+            //        //cfg.Conventions.Add(new VersionByNamespaceConvention());
+            //        cfg.ReportApiVersions = true;
+            //    }
+            //);
+            //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //var modelBuilder = new VersionedODataModelBuilder(config)
+            //{
+            //    ModelConfigurations =
+            //    {
+            //        new DataModelConfiguration()
+            //    }
+            //};
 
 
-            var models = modelBuilder.GetEdmModels();
-            config.Count();
-            //config.MapVersionedODataRoute("odata-bypath", "odata/v{apiVersion}", models, ConfigureContainer);
-            config.MapVersionedODataRoute("odata", "api", models, ConfigureContainer);
+            //var models = modelBuilder.GetEdmModels();
+            //config.Count();
+            ////config.MapVersionedODataRoute("odata-bypath", "odata/v{apiVersion}", models, ConfigureContainer);
+            //config.MapVersionedODataRoute("odata", "api", models, ConfigureContainer);
             
-            var apiExplorer = config.AddODataApiExplorer(o =>
-            {
-                o.GroupNameFormat = "'v'VVV";
-                o.SubstituteApiVersionInUrl = true;
-            });
+            //var apiExplorer = config.AddODataApiExplorer(o =>
+            //{
+            //    o.GroupNameFormat = "'v'VVV";
+            //    o.SubstituteApiVersionInUrl = true;
+            //});
 
-            config.EnableSwagger(
-                    "{apiVersion}/swagger",
-                    swagger =>
-                    {
-                        swagger.MultipleApiVersions(
-                            (apiDescription, version) => apiDescription.GetGroupName() == version,
-                            info =>
-                            {
-                                foreach (var group in apiExplorer.ApiDescriptions)
-                                {
-                                    info.Version(group.Name, $"Sample API {group.ApiVersion}");
-                                }
-                            });
-                    })
-                .EnableSwaggerUi(swagger => swagger.EnableDiscoveryUrlSelector());
+            //config.EnableSwagger(
+            //        "{apiVersion}/swagger",
+            //        swagger =>
+            //        {
+            //            swagger.MultipleApiVersions(
+            //                (apiDescription, version) => apiDescription.GetGroupName() == version,
+            //                info =>
+            //                {
+            //                    foreach (var group in apiExplorer.ApiDescriptions)
+            //                    {
+            //                        info.Version(group.Name, $"Sample API {group.ApiVersion}");
+            //                    }
+            //                });
+            //        })
+            //    .EnableSwaggerUi(swagger => swagger.EnableDiscoveryUrlSelector());
 
-            appBuilder.UseWebApi(httpServer);
+            appBuilder.UseWebApi(config);
         }
 
         static void ConfigureContainer(IContainerBuilder builder)

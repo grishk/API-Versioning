@@ -40,6 +40,9 @@
     <Reference Include="Microsoft.AspNet.WebApi.Versioning, Version=4.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Versioning.4.1.1\lib\net45\Microsoft.AspNet.WebApi.Versioning.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.WebApi.Versioning.ApiExplorer, Version=4.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Versioning.ApiExplorer.4.1.1\lib\net45\Microsoft.AspNet.WebApi.Versioning.ApiExplorer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.1.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
     </Reference>
@@ -168,6 +171,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extra\BaseController.cs" />
+    <Compile Include="Extra\BaseODataController.cs" />
+    <Compile Include="Extra\LocalMarketController.cs" />
     <Compile Include="HttpExtensions\ApiControllerExtensions.cs" />
     <Compile Include="Extra\AddressController.cs" />
     <Compile Include="Extra\PeopleController.cs" />
@@ -181,7 +187,14 @@
     <Compile Include="Models\AddressesConfiguration.cs" />
     <Compile Include="Models\AllConfigurations.cs" />
     <Compile Include="Models\DataModelConfiguration.cs" />
+    <Compile Include="Models\DynamicAssembly\MarketControllerBuilder.cs" />
+    <Compile Include="Models\DynamicConfiguration.cs" />
+    <Compile Include="Models\DynamicAssembly\DynamicControllerBuilder.cs" />
+    <Compile Include="Models\DynamicAssembly\DynamicControllerDescription.cs" />
+    <Compile Include="Models\EntityBase.cs" />
     <Compile Include="Models\LineItem.cs" />
+    <Compile Include="Models\GlobalMarket.cs" />
+    <Compile Include="Models\LocalMarket.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -190,6 +203,5 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
