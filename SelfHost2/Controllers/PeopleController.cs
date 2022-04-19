@@ -51,13 +51,13 @@ namespace SelfHost2.Controllers
         }
 
        [HttpGet]
-       [Swashbuckle.Swagger.Annotations.SwaggerResponse(200, "Get People", typeof(Order))]
+       [Swashbuckle.Swagger.Annotations.SwaggerResponse(200, "Get People", typeof(Person))]
        [Swashbuckle.Swagger.Annotations.SwaggerOperation("PeopleOperation")]
        [Swashbuckle.Swagger.Annotations.SwaggerResponse(300)]
        [Swashbuckle.Swagger.Annotations.SwaggerResponse(301)]
-        public IHttpActionResult Get(ODataQueryOptions<Order> options)
+        public IHttpActionResult Get(ODataQueryOptions<Person> options)
         {
-            return this.SuccessOrNotFound(new Order{Id = 1, Customer = "Cust1"});
+            return this.SuccessOrNotFound(new Person { Id = 1, Desc = "desk 1"});
         }
     }
 }

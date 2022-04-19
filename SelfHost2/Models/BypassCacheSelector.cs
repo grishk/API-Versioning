@@ -8,7 +8,21 @@
     using System.Web.Http;
     using System.Web.Http.Controllers;
 
-    public class BypassCacheSelector : ApiVersionControllerSelector
+
+    public class ThruApiVersionControllerSelector : ApiVersionControllerSelector
+    {
+        public ThruApiVersionControllerSelector(HttpConfiguration configuration, ApiVersioningOptions options)
+                : base(configuration, options)
+        {
+        }
+
+        public override HttpControllerDescriptor SelectController(HttpRequestMessage request)
+        {
+                return base.SelectController(request);
+        }
+    }        
+
+        public class BypassCacheSelector : ApiVersionControllerSelector
     {
         private readonly HttpConfiguration _configuration;
 

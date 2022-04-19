@@ -16,8 +16,9 @@ namespace SeparateControllers.Models.DynamicAssembly
             add.ODataPrefix = nameof(LocalMarket);
             AddController(add);
 
-            add = DynamicControllerDescription.Create<BaseController<GlobalMarket>>(nameof(GlobalMarket));
+            add = DynamicControllerDescription.Create<BaseODataController<GlobalMarket>>(nameof(GlobalMarket));
             add.Versions = new[] { "2", "4" };
+            add.ODataPrefix = nameof(GlobalMarket);
             AddController(add);
         }
     }

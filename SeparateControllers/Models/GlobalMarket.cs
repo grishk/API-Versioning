@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SeparateControllers.Models
 {
     [Select]
-    public class GlobalMarket: LocalMarket
+    public class GlobalMarket: EntityBase
     { 
         public GlobalMarket()
         {
@@ -20,5 +20,6 @@ namespace SeparateControllers.Models
         }
 
         public string GlobalDesc { get; set; }
+        public string Desc { get; set; }
     }
 }

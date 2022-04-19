@@ -11,7 +11,6 @@ namespace SeparateControllers.Extra
     [ApiVersion("3.0")]
     [ApiVersion("4.0")]
     [ApiVersion("5.0-alpha")]
-    [ODataRoutePrefix("People")]
     public class PeopleController : ODataController
     {
         public PeopleController()

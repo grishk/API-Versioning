@@ -10,6 +10,8 @@ namespace SeparateControllers.Models.DynamicAssembly
 {
     public abstract class DynamicControllerBulder
     {
+        public const string DynamicAssemblyBuilderName = "DynamicContollers";
+
         protected readonly ModuleBuilder _moduleBuilder;
         protected readonly string _moduleName;
         protected readonly static ConstructorInfo VersionConstructor = typeof(ApiVersionAttribute).GetConstructor(new[] { typeof(string) });
@@ -17,7 +19,7 @@ namespace SeparateControllers.Models.DynamicAssembly
 
         public DynamicControllerBulder(string name) 
         {
-            _moduleName = $"{GetType().Assembly.GetName().Name}.{name}";
+            _moduleName = $"{DynamicAssemblyBuilderName}.{name}";
             var assemblyName = new AssemblyName(_moduleName);
             AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
             _moduleBuilder = assemblyBuilder.DefineDynamicModule(_moduleName + ".dll", true);

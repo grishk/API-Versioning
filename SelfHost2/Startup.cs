@@ -12,6 +12,7 @@ namespace SelfHost2
     using Microsoft.OData.UriParser;
     using Microsoft.Web.Http.Versioning;
     using Newtonsoft.Json.Serialization;
+    using SelfHost2.Models;
     using SeparateControllers.Models.DynamicAssembly;
     using System;
     using System.Collections.Generic;
@@ -43,27 +44,46 @@ namespace SelfHost2
             var dynamicAssemblyBuilder = new MarketControllerBuilder();
             dynamicAssemblyBuilder.Build();
 
-            configuration.Services.Replace(typeof(IAssembliesResolver), new MyAssembliesResolver());
+ //           configuration.Services.Replace(typeof(IAssembliesResolver), new MyAssembliesResolver());
 
-            var svc = configuration.Services.GetService(typeof(IHttpControllerSelector));
-            configuration.Services.Replace(typeof(IHttpControllerTypeResolver), new CustomHttpControllerTypeResolver());
             configuration.Routes.MapHttpRoute(
                            name: "DefaultApi",
                            routeTemplate: "api/{controller}/{id}",
                            defaults: new { id = RouteParameter.Optional }
                        );
 
+            // handling errors
             configuration.Services.Replace(typeof(IExceptionHandler), new CustomExceptionHandler());
+
+            configuration.Services.Replace(typeof(IHttpControllerTypeResolver), new CustomHttpControllerTypeResolver());
+
             // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
-            ApiVersioningOptions apiVersioningOptions = null;
             configuration.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
-                apiVersioningOptions = options;
             });
 
             // note: this is required to make the default swagger json settings match the odata conventions applied by EnableLowerCamelCase()
             configuration.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            //var modelConfigurations = new IModelConfiguration[]
+            //    {
+            //        new AllConfigurations(),
+            //        new AddressesConfiguration(),
+            //        new DynamicConfiguration()
+            //        //new PersonModelConfiguration(),
+            //        //new OrderModelConfiguration(),
+            //        //new ProductConfiguration(),
+            //        //new SupplierConfiguration(),
+            //    };
+
+            //ODataConventionModelBuilder bldr = new ODataConventionModelBuilder();
+            //foreach (var mdl in modelConfigurations) 
+            //{
+            //    mdl.Apply(bldr, null, null);
+            //}
+
+            //configuration.MapODataServiceRoute("ODataRoute", "odata", bldr.GetEdmModel());
 
             var modelBuilder = new VersionedODataModelBuilder(configuration)
             {
@@ -86,6 +106,7 @@ namespace SelfHost2
             // INFO: while you can use both, you should choose only ONE of the following; comment, uncomment, or remove as necessary
 
             // WHEN VERSIONING BY: query string, header, or media type
+
             configuration.MapVersionedODataRoute("odata", "odata", models, ConfigureContainer);
 
             // WHEN VERSIONING BY: url segment
@@ -198,21 +219,4 @@ namespace SelfHost2
         }
     }
 
-    public class CustomHttpControllerTypeResolver : DefaultHttpControllerTypeResolver
-    {
-        public CustomHttpControllerTypeResolver()
-                : base(IsHttpEndpoint)
-        { }
-
-        internal static bool IsHttpEndpoint(Type t)
-        {
-            if (t == null) throw new ArgumentNullException("t");
-
-            return
-             t.IsClass &&
-             t.IsVisible &&
-             !t.IsAbstract &&
-            typeof(ApiController).IsAssignableFrom(t);
-        }
-     }
 }
