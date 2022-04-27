@@ -16,8 +16,8 @@ namespace SelfHost2.Controllers
     /// <summary>
     /// Represents a RESTful people service.
     /// </summary>
-    [ApiVersion("0.1")]
-    [ApiVersion("0.2", Deprecated = true)]
+    [ApiVersion("0.2")]
+    [ApiVersion("0.1", Deprecated = true)]
     public class PeopleController : ODataController
     {
         /// <summary>
@@ -57,7 +57,7 @@ namespace SelfHost2.Controllers
        [Swashbuckle.Swagger.Annotations.SwaggerResponse(301)]
         public IHttpActionResult Get(ODataQueryOptions<Person> options)
         {
-            return this.SuccessOrNotFound(new Person { Id = 1, Desc = "desk 1"});
+            return this.SuccessOrNotFound(new Person{Id = 1, Desc = "desc1"});
         }
     }
 }

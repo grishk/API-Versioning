@@ -10,6 +10,10 @@ namespace SeparateControllers.Models
         {
             builder.EntitySet<Person>("People").EntityType.HasKey(o => o.Id);
             builder.EntitySet<Order>("Orders").EntityType.HasKey(o => o.Id);
+            builder.Function("Ping").Returns<int>().Parameter<int>("IP");
+            builder.Function("Pinging").Returns<int>().Parameter<int>("IP");
+            builder.Function("GetSalesTaxRate").Returns<double>().Parameter<int>("PostalCode");
+
         }
     }
 }

@@ -9,13 +9,13 @@ namespace SelfHost2
     using Microsoft.AspNet.OData.Extensions;
     using Microsoft.AspNet.OData.Routing;
     using Microsoft.OData;
+    using Microsoft.OData.Edm;
     using Microsoft.OData.UriParser;
-    using Microsoft.Web.Http.Versioning;
+    using Microsoft.Web.Http;
     using Newtonsoft.Json.Serialization;
     using SelfHost2.Models;
-    using SeparateControllers.Models.DynamicAssembly;
+    using SeparateControllers.DynamicControllers;
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -40,26 +40,25 @@ namespace SelfHost2
         {
             var configuration = new HttpConfiguration();
 
-            // create dynamic controller
-            var dynamicAssemblyBuilder = new MarketControllerBuilder();
-            dynamicAssemblyBuilder.Build();
-
- //           configuration.Services.Replace(typeof(IAssembliesResolver), new MyAssembliesResolver());
-
             configuration.Routes.MapHttpRoute(
                            name: "DefaultApi",
                            routeTemplate: "api/{controller}/{action}/{id}",
                            defaults: new { id = RouteParameter.Optional }
                        );
 
-            // handling errors
+            // create dynamic controllers
+            MarketControllerBuilder.Build();
+            PingControllerBuilder.Build();
+
+            // handling arror
             configuration.Services.Replace(typeof(IExceptionHandler), new CustomExceptionHandler());
 
+            // include dynamic assemblies
             configuration.Services.Replace(typeof(IHttpControllerTypeResolver), new CustomHttpControllerTypeResolver());
 
             // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
-            ApiVersioningOptions opts = null;
-                configuration.AddApiVersioning(options =>
+            Microsoft.Web.Http.Versioning.ApiVersioningOptions opts = null;
+            configuration.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
                 opts = options;
@@ -83,14 +82,15 @@ namespace SelfHost2
             };
             var models = modelBuilder.GetEdmModels();
 
+            //           model.VocabularyAnnotations.Add(new ApiVersionAttribute("1.0"));
             // global odata query options
             configuration.Count();
 
             // INFO: while you can use both, you should choose only ONE of the following; comment, uncomment, or remove as necessary
 
             // WHEN VERSIONING BY: query string, header, or media type
-
             configuration.MapVersionedODataRoute("odata", "odata", models, ConfigureContainer);
+
             // WHEN VERSIONING BY: url segment
             // configuration.MapVersionedODataRoutes( "odata-bypath", "api/v{apiVersion}", models, ConfigureContainer );
 
@@ -124,7 +124,6 @@ namespace SelfHost2
                 swagger =>
                 {
                     // build a swagger document and endpoint for each discovered API version
-
                     swagger.MultipleApiVersions(
                         (apiDescription, version) => apiDescription.GetGroupName() == version,
                         info =>
@@ -146,16 +145,16 @@ namespace SelfHost2
                             }
                         });
 
-                    
                     // add a custom operation filter which documents the implicit API version parameter
                     swagger.OperationFilter<SwaggerDefaultValues>();
 
                     // integrate xml comments
                     swagger.IncludeXmlComments(XmlCommentsFilePath);
                 })
-                .EnableSwaggerUi(swagger => { swagger.EnableDiscoveryUrlSelector();});
+                .EnableSwaggerUi(swagger => swagger.EnableDiscoveryUrlSelector());
 
             configuration.Services.Replace(typeof(IHttpControllerSelector), new ThruApiVersionControllerSelector(configuration, opts));
+
             builder.UseWebApi(configuration);
         }
 
@@ -193,15 +192,4 @@ namespace SelfHost2
             builder.AddService<ODataUriResolver>(Singleton, sp => new UnqualifiedCallAndEnumPrefixFreeResolver() { EnableCaseInsensitive = true });
         }
     }
-
-    public class MyAssembliesResolver : DefaultAssembliesResolver
-    {
-        public override ICollection<Assembly> GetAssemblies()
-        {
-            ICollection<Assembly> baseAssemblies = base.GetAssemblies();
-            List<Assembly> assemblies = new List<Assembly>(baseAssemblies);
-            return assemblies;
-        }
-    }
-
 }

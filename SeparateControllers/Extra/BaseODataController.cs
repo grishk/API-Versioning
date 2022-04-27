@@ -19,9 +19,9 @@ namespace SeparateControllers.Extra
             return Ok(new[] { new T { Id = 222, Name = $"Odata list nameame of {typeof(T)}" } });
         }
 
-        public string GetName([FromODataUri] int key)
+        public IHttpActionResult GetName([FromODataUri] int key)
         {
-            return new T { Id = 222, Name = $"Odata list nameame of {typeof(T)}" }.Name ;
+            return Ok(new T { Id = 222, Name = $"Odata list nameame of {typeof(T)}" }.Name) ;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using SeparateControllers.Models.DynamicAssembly;
+﻿using SeparateControllers.DynamicBuilder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +20,8 @@ namespace SelfHost2.Models
             foreach (Assembly assembly in assemblies)
             {
                 Type[] exportedTypes = null;
-                if (assembly == null || 
-                    assembly.IsDynamic && !assembly.FullName.Contains(DynamicControllerBulder.DynamicAssemblyBuilderName))
+                if (assembly == null ||
+                    assembly.IsDynamic && !assembly.FullName.Contains(AssemblyBuilder.DynamicAssemblyBuilderName))
                 {
                     // can't call GetTypes on a null (or dynamic?) assembly
                     continue;

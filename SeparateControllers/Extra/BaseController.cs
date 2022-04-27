@@ -2,6 +2,7 @@
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.Web.Http;
 using SeparateControllers.Models;
+using System;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -11,26 +12,14 @@ namespace SeparateControllers.Extra
     public abstract class BaseController<T>: ApiController
         where T: EntityBase, new ()
     {
-        [Route("{id}")]
-        public IHttpActionResult Get([FromODataUri] int id)
+        public IHttpActionResult Get(int id)
         {
-            return Ok(new T() { Id = id,  Name = $"Name just of {typeof(T)}" });
+            return Ok(new T() { Id = id,  Name = $"Name of {nameof(T)}" });
         }
 
-        [Route()]
-        public IList<T> GetV3a()
+        public IHttpActionResult Get(Guid g)
         {
-            return new[]
-            {
-                new T{Id = 10},
-                new T{Id = 20},
-                new T{Id = 30}
-            };
-        }
-
-        public IHttpActionResult GetDescFromPeople()
-        {
-            return Ok(new SeparateControllers.Models.Person { Id = 222, Desc = "V1 Odata list nameame of desc" }.Desc);
+            return Ok(new[] { new T { Name = $"V1.0 Name of {nameof(T)}" } });
         }
     }
 }

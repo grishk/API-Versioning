@@ -1,10 +1,9 @@
-﻿
-using System.Web.Http.ExceptionHandling;
+﻿using System.Web.Http.ExceptionHandling;
 using System.Web.Http.Results;
 
-namespace SelfHost2
+namespace SelfHost2.Models
 {
-    public class CustomExceptionHandler : ExceptionHandler
+    class CustomExceptionHandler : ExceptionHandler
     {
         public override void Handle(ExceptionHandlerContext context)
         {

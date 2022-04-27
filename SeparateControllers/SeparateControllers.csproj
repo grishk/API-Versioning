@@ -40,9 +40,6 @@
     <Reference Include="Microsoft.AspNet.WebApi.Versioning, Version=4.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Versioning.4.1.1\lib\net45\Microsoft.AspNet.WebApi.Versioning.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.WebApi.Versioning.ApiExplorer, Version=4.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Versioning.ApiExplorer.4.1.1\lib\net45\Microsoft.AspNet.WebApi.Versioning.ApiExplorer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.1.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
     </Reference>
@@ -70,17 +67,17 @@
     <Reference Include="Microsoft.Net.Http.Headers, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.Headers.2.1.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.OData.Core, Version=7.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.OData.Core.7.9.0\lib\net45\Microsoft.OData.Core.dll</HintPath>
+    <Reference Include="Microsoft.OData.Core, Version=7.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.OData.Core.7.10.0\lib\net45\Microsoft.OData.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.OData.Edm, Version=7.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.OData.Edm.7.9.0\lib\net45\Microsoft.OData.Edm.dll</HintPath>
+    <Reference Include="Microsoft.OData.Edm, Version=7.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.OData.Edm.7.10.0\lib\net45\Microsoft.OData.Edm.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.2.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Spatial, Version=7.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Spatial.7.9.0\lib\net45\Microsoft.Spatial.dll</HintPath>
+    <Reference Include="Microsoft.Spatial, Version=7.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Spatial.7.10.0\lib\net45\Microsoft.Spatial.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -90,6 +87,9 @@
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -171,29 +171,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extra\BaseController.cs" />
+    <Compile Include="DynamicBuilder\AssemblyBuilder.cs" />
+    <Compile Include="DynamicBuilder\Extensions\MethodBuilderController.cs" />
+    <Compile Include="DynamicBuilder\Extensions\TypeBuilderController.cs" />
+    <Compile Include="DynamicBuilder\Extensions\ModuleBuilderController.cs" />
+    <Compile Include="DynamicControllers\PingControllerBuilder.cs" />
     <Compile Include="Extra\BaseODataController.cs" />
-    <Compile Include="Extra\LocalMarketController.cs" />
+    <Compile Include="Extra\PController.cs" />
+    <Compile Include="Extra\FunctionController.cs" />
+    <Compile Include="Extra\People345Controller.cs" />
+    <Compile Include="Extra\V1\People1Controller.cs" />
+    <Compile Include="Extra\V2\People2Controller.cs" />
     <Compile Include="HttpExtensions\ApiControllerExtensions.cs" />
     <Compile Include="Extra\AddressController.cs" />
-    <Compile Include="Extra\People345Controller.cs" />
     <Compile Include="Extra\V1\HomeController.cs" />
-    <Compile Include="Extra\V1\People1Controller.cs" />
     <Compile Include="Extra\V2\HomeController.cs" />
-    <Compile Include="Extra\V2\People2Controller.cs" />
     <Compile Include="Extra\ValuesController.cs" />
     <Compile Include="HttpExtensions\EnumerableExtensions.cs" />
     <Compile Include="HttpExtensions\HttpRequestMessageExtensions.cs" />
+    <Compile Include="Extra\BaseController.cs" />
+    <Compile Include="DynamicControllers\MarketControllerBuilder.cs" />
+    <Compile Include="Models\DynamicConfiguration.cs" />
     <Compile Include="Models\AddressesConfiguration.cs" />
     <Compile Include="Models\AllConfigurations.cs" />
     <Compile Include="Models\DataModelConfiguration.cs" />
-    <Compile Include="Models\DynamicAssembly\MarketControllerBuilder.cs" />
-    <Compile Include="Models\DynamicConfiguration.cs" />
-    <Compile Include="Models\DynamicAssembly\DynamicControllerBuilder.cs" />
-    <Compile Include="Models\DynamicAssembly\DynamicControllerDescription.cs" />
     <Compile Include="Models\EntityBase.cs" />
-    <Compile Include="Models\LineItem.cs" />
     <Compile Include="Models\GlobalMarket.cs" />
+    <Compile Include="Models\LineItem.cs" />
     <Compile Include="Models\LocalMarket.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Person.cs" />
