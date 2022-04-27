@@ -14,6 +14,7 @@
         public ThruApiVersionControllerSelector(HttpConfiguration configuration, ApiVersioningOptions options)
                 : base(configuration, options)
         {
+            var cm = this.GetControllerMapping();
         }
 
         public override HttpControllerDescriptor SelectController(HttpRequestMessage request)

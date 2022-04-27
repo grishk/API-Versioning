@@ -17,7 +17,7 @@ namespace SeparateControllers.Models
         public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
         {
             builder.EntitySet<LocalMarket>("LocalMarket").EntityType.HasKey(o => o.Id);
-            builder.EntitySet<GlobalMarket>("GlobalMarket").EntityType.HasKey(o => o.Id);
+            //builder.EntitySet<GlobalMarket>("GlobalMarket").EntityType.HasKey(o => o.Id);
         }
 
         //    /// <summary>

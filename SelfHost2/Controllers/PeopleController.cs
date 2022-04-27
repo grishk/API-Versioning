@@ -16,8 +16,8 @@ namespace SelfHost2.Controllers
     /// <summary>
     /// Represents a RESTful people service.
     /// </summary>
-    [ApiVersion("0.2")]
-    [ApiVersion("0.1", Deprecated = true)]
+    [ApiVersion("0.1")]
+    [ApiVersion("0.2", Deprecated = true)]
     public class PeopleController : ODataController
     {
         /// <summary>

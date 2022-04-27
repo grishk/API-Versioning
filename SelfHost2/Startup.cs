@@ -48,7 +48,7 @@ namespace SelfHost2
 
             configuration.Routes.MapHttpRoute(
                            name: "DefaultApi",
-                           routeTemplate: "api/{controller}/{id}",
+                           routeTemplate: "api/{controller}/{action}/{id}",
                            defaults: new { id = RouteParameter.Optional }
                        );
 
@@ -58,32 +58,15 @@ namespace SelfHost2
             configuration.Services.Replace(typeof(IHttpControllerTypeResolver), new CustomHttpControllerTypeResolver());
 
             // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
-            configuration.AddApiVersioning(options =>
+            ApiVersioningOptions opts = null;
+                configuration.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
+                opts = options;
             });
 
             // note: this is required to make the default swagger json settings match the odata conventions applied by EnableLowerCamelCase()
             configuration.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-            //var modelConfigurations = new IModelConfiguration[]
-            //    {
-            //        new AllConfigurations(),
-            //        new AddressesConfiguration(),
-            //        new DynamicConfiguration()
-            //        //new PersonModelConfiguration(),
-            //        //new OrderModelConfiguration(),
-            //        //new ProductConfiguration(),
-            //        //new SupplierConfiguration(),
-            //    };
-
-            //ODataConventionModelBuilder bldr = new ODataConventionModelBuilder();
-            //foreach (var mdl in modelConfigurations) 
-            //{
-            //    mdl.Apply(bldr, null, null);
-            //}
-
-            //configuration.MapODataServiceRoute("ODataRoute", "odata", bldr.GetEdmModel());
 
             var modelBuilder = new VersionedODataModelBuilder(configuration)
             {
@@ -108,7 +91,6 @@ namespace SelfHost2
             // WHEN VERSIONING BY: query string, header, or media type
 
             configuration.MapVersionedODataRoute("odata", "odata", models, ConfigureContainer);
-
             // WHEN VERSIONING BY: url segment
             // configuration.MapVersionedODataRoutes( "odata-bypath", "api/v{apiVersion}", models, ConfigureContainer );
 
@@ -142,6 +124,7 @@ namespace SelfHost2
                 swagger =>
                 {
                     // build a swagger document and endpoint for each discovered API version
+
                     swagger.MultipleApiVersions(
                         (apiDescription, version) => apiDescription.GetGroupName() == version,
                         info =>
@@ -163,14 +146,16 @@ namespace SelfHost2
                             }
                         });
 
+                    
                     // add a custom operation filter which documents the implicit API version parameter
                     swagger.OperationFilter<SwaggerDefaultValues>();
 
                     // integrate xml comments
                     swagger.IncludeXmlComments(XmlCommentsFilePath);
                 })
-                .EnableSwaggerUi(swagger => swagger.EnableDiscoveryUrlSelector());
+                .EnableSwaggerUi(swagger => { swagger.EnableDiscoveryUrlSelector();});
 
+            configuration.Services.Replace(typeof(IHttpControllerSelector), new ThruApiVersionControllerSelector(configuration, opts));
             builder.UseWebApi(configuration);
         }
 

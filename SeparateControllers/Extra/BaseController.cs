@@ -14,10 +14,10 @@ namespace SeparateControllers.Extra
         [Route("{id}")]
         public IHttpActionResult Get([FromODataUri] int id)
         {
-            return Ok(new T() { Id = id,  Name = $"Name just of {nameof(T)}" });
+            return Ok(new T() { Id = id,  Name = $"Name just of {typeof(T)}" });
         }
 
-        [MapToApiVersion("3.0-alpha"), Route()]
+        [Route()]
         public IList<T> GetV3a()
         {
             return new[]
@@ -26,6 +26,11 @@ namespace SeparateControllers.Extra
                 new T{Id = 20},
                 new T{Id = 30}
             };
+        }
+
+        public IHttpActionResult GetDescFromPeople()
+        {
+            return Ok(new SeparateControllers.Models.Person { Id = 222, Desc = "V1 Odata list nameame of desc" }.Desc);
         }
     }
 }
