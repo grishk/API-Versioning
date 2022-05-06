@@ -16,5 +16,11 @@
         [ResponseType(typeof(int))]
         [ODataRoute("Pinging(IP={ip})")]
         public IHttpActionResult Pinging(int ip) => Ok(15);
+
+        [HttpGet]
+        [ResponseType(typeof(double))]
+        [ODataRoute("Healther(Family={family})")]
+        public IHttpActionResult Healther(string family) => Ok(99.9);
+
     }
 }

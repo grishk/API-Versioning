@@ -27,6 +27,7 @@
     <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ODataRuntime.Impl\ODataRuntime.Impl.csproj" />
     <ProjectReference Include="..\SeparateControllers\SeparateControllers.csproj" />
   </ItemGroup>
   <ItemGroup>

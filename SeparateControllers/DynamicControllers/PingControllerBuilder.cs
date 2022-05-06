@@ -13,6 +13,7 @@ namespace SeparateControllers.DynamicControllers
         public static void Build() 
         {
             Func<int, int> ping = (ip) => 22222;
+            Func<int, string, string> getVersion = (version, family) => $"Health -> {version}.{family}";
             var builder = AssemblyBuilder.CreateAssebly("Health");
 
             builder.BuildControllerBegin<Microsoft.Examples.PController>("Health")
@@ -28,6 +29,13 @@ namespace SeparateControllers.DynamicControllers
                 .AddHttpVerb(HttpMethod.Get)
                 .AddResponseType(typeof(int))
                 .SetDelegate(ping)
+                .AddMethodEnd()
+                .AddMethodBegin("Health", typeof(string), typeof(int), typeof(string))
+                .AddODataRoute("Health(Version={version},Family={family})")
+                .AddSwaggerResponse(HttpStatusCode.OK, "Health OK")
+                .AddHttpVerb(HttpMethod.Get)
+                .AddResponseType(typeof(string))
+                .SetDelegate(getVersion)
                 .AddMethodEnd()
                 .BuildControllerEnd();
         }

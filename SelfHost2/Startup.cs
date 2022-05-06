@@ -13,6 +13,9 @@ namespace SelfHost2
     using Microsoft.OData.UriParser;
     using Microsoft.Web.Http;
     using Newtonsoft.Json.Serialization;
+    using ODataRuntime.Impl.Controllers;
+    using ODataRuntime.Impl.Models;
+    using ODataRuntime.Impl.Services;
     using SelfHost2.Models;
     using SeparateControllers.DynamicControllers;
     using System;
@@ -50,6 +53,9 @@ namespace SelfHost2
             MarketControllerBuilder.Build();
             PingControllerBuilder.Build();
 
+            ControllerRegistor.Register();
+            DomainServiceInit.Initialize();
+
             // handling arror
             configuration.Services.Replace(typeof(IExceptionHandler), new CustomExceptionHandler());
 
@@ -73,7 +79,8 @@ namespace SelfHost2
                 {
                     new AllConfigurations(),
                     new AddressesConfiguration(),
-                    new DynamicConfiguration()
+                    new DynamicConfiguration(),
+                    new ImplModelConfiguration()
                     //new PersonModelConfiguration(),
                     //new OrderModelConfiguration(),
                     //new ProductConfiguration(),

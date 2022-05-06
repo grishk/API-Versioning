@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SelfHost", "SelfHost\SelfHo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SelfHost2", "SelfHost2\SelfHost2.csproj", "{369BB40E-9BC1-4580-99D4-E6F0B418E84A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataRuntime", "ODataRuntime\ODataRuntime.csproj", "{2201FBED-3646-438D-BD9A-2029F79946B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataRuntime.Impl", "ODataRuntime.Impl\ODataRuntime.Impl.csproj", "{A154A518-AA78-4625-B1DD-64B975F724BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{369BB40E-9BC1-4580-99D4-E6F0B418E84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{369BB40E-9BC1-4580-99D4-E6F0B418E84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{369BB40E-9BC1-4580-99D4-E6F0B418E84A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2201FBED-3646-438D-BD9A-2029F79946B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2201FBED-3646-438D-BD9A-2029F79946B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2201FBED-3646-438D-BD9A-2029F79946B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2201FBED-3646-438D-BD9A-2029F79946B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A154A518-AA78-4625-B1DD-64B975F724BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A154A518-AA78-4625-B1DD-64B975F724BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A154A518-AA78-4625-B1DD-64B975F724BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A154A518-AA78-4625-B1DD-64B975F724BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
