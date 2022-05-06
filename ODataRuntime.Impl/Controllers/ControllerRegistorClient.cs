@@ -5,7 +5,7 @@ using System.Net.Http;
 
 namespace ODataRuntime.Impl.Controllers
 {
-    public static partial class ControllerRegistor
+    public static partial class ApiBuilder
     {
         private static void RegisterClient(ControllerBuilder controllerBuilderClient)
         {
