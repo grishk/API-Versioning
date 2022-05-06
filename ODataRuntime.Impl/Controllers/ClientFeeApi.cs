@@ -2,17 +2,22 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using Microsoft.AspNet.OData;
 
 namespace ODataRuntime.Impl.Controllers
 {
-    public static partial class ApiBuilder
+    public class ClientFeeApi : Api
     {
-        private static void RegisterFeeFunc(ControllerBuilder controllerBuilderFee) 
+        public ClientFeeApi(AssemblyBuilder assemblyBuilder) : base(assemblyBuilder, "Fees", typeof(ODataController))
         {
-            controllerBuilderFee.AddVersionNeutral();
+        }
+
+        protected override void Register(ControllerBuilder builder)
+        {
+            builder.AddVersionNeutral();
 
             Func<int, decimal> getClientFee = (clientId) => 22222.3m;
-            var actionBuilderGetFee = new ActionBuilderFromDelegate(controllerBuilderFee, "GetClientFee", getClientFee);
+            var actionBuilderGetFee = new ActionBuilderFromDelegate(builder, "GetClientFee", getClientFee);
             actionBuilderGetFee
                 .AddHttpVerb(HttpMethod.Get)
                 .AddResponseType(typeof(decimal))

@@ -122,9 +122,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ControllerRegistorClient.cs" />
-    <Compile Include="Controllers\ControllerRegistorFunc.cs" />
-    <Compile Include="Controllers\ControllerRegistorSite.cs" />
+    <Compile Include="Controllers\ClientApi.cs" />
+    <Compile Include="Controllers\ClientFeeApi.cs" />
+    <Compile Include="Controllers\SiteApi.cs" />
     <Compile Include="Controllers\ApiBuilder.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ImplModelConfiguration.cs" />

@@ -2,22 +2,27 @@
 using ODataRuntime.Impl.Models;
 using System.Net;
 using System.Net.Http;
+using ODataRuntime.Controllers;
 
 namespace ODataRuntime.Impl.Controllers
 {
-    public static partial class ApiBuilder
+    public class SiteApi : Api<Site>
     {
-        private static void RegisterSite(ControllerBuilder controllerBuilderSite)
+        public SiteApi(AssemblyBuilder assemblyBuilder) : base(assemblyBuilder)
         {
-            controllerBuilderSite.AddODataRoutePrefix(nameof(Site));
-            controllerBuilderSite.AddVersion("0.4");
-            var actionBuilderGet = new ActionBuilderFromBaseMethod(controllerBuilderSite, "Get", "DoGet");
+        }
+
+        protected override void Register(ControllerBuilder builder)
+        {
+            builder.AddODataRoutePrefix(nameof(Site));
+            builder.AddVersion("0.4");
+            var actionBuilderGet = new ActionBuilderFromBaseMethod(builder, "Get", "DoGet");
             actionBuilderGet
                 .AddHttpVerb(HttpMethod.Get)
                 .AddResponseType(typeof(Site))
                 .AddSwaggerResponse(HttpStatusCode.OK, "Site by Id", typeof(Site));
 
-            var actionBuilderPost = new ActionBuilderFromBaseMethod(controllerBuilderSite, "Post", "DoPost");
+            var actionBuilderPost = new ActionBuilderFromBaseMethod(builder, "Post", "DoPost");
             actionBuilderPost
                 .AddHttpVerb(HttpMethod.Post)
                 .AddResponseType(typeof(Site))

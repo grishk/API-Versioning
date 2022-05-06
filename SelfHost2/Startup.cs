@@ -53,7 +53,7 @@ namespace SelfHost2
             MarketControllerBuilder.Build();
             PingControllerBuilder.Build();
 
-            ApiBuilder.Register();
+            ApiBuilder.Register(new ApiFactory());
             DomainServiceInit.Initialize();
 
             // handling arror

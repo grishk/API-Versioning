@@ -1,33 +1,26 @@
-﻿using Microsoft.AspNet.OData;
-using ODataRuntime.Builders;
-using ODataRuntime.Controllers;
-using ODataRuntime.Impl.Models;
+﻿using ODataRuntime.Builders;
 
 namespace ODataRuntime.Impl.Controllers
 {
-    public static partial class ApiBuilder
+    public class ApiBuilder
     {
-        public static void Register() 
+        
+
+        public static void Register(ApiFactory apiFactory) 
         {
-            var assemblyBuilder = new AssemblyBuilder("Test");
+            AssemblyBuilder assemblyBuilder = new AssemblyBuilder("Test");
+            apiFactory.Add(new ClientApi(assemblyBuilder));
+            apiFactory.Add(new ClientFeeApi(assemblyBuilder));
+            apiFactory.Add(new SiteApi(assemblyBuilder));
+        }
+    }
 
-            using (var controllerBuilderClient = 
-                new ControllerBuilder(assemblyBuilder, nameof(Client), typeof(BaseEntityODataControllerInt<Client>))) 
-            {
-                RegisterClient(controllerBuilderClient);
-            }
-
-            using (var controllerBuilderSite =
-                new ControllerBuilder(assemblyBuilder, nameof(Site), typeof(BaseEntityODataControllerInt<Site>)))
-            {
-                RegisterSite(controllerBuilderSite);
-            }
-
-            using (var controllerBuilderFunc =
-                new ControllerBuilder(assemblyBuilder, "Fees", typeof(ODataController)))
-            {
-                RegisterFeeFunc(controllerBuilderFunc);
-            }
+    public class ApiFactory
+    {
+        
+        public void Add(Api api)
+        {
+            api.Register();
         }
     }
 }
