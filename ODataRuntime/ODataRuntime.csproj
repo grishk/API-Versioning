@@ -130,6 +130,8 @@
     <Compile Include="Builders\ODataControllerBuilder.cs" />
     <Compile Include="Controllers\BaseEntityODataController.cs" />
     <Compile Include="Controllers\BaseEntityODataControllerInt.cs" />
+    <Compile Include="Interfaces\Api.cs" />
+    <Compile Include="Builders\ApiBuilder.cs" />
     <Compile Include="Interfaces\IEntityService.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\EntityKeyInt.cs" />

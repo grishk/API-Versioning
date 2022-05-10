@@ -20,8 +20,7 @@ namespace SelfHost2.Models
             foreach (Assembly assembly in assemblies)
             {
                 Type[] exportedTypes = null;
-                if (assembly == null ||
-                    assembly.IsDynamic && !assembly.FullName.Contains(AssemblyBuilder.DynamicAssemblyBuilderName))
+                if (!CanExplore(assembly))
                 {
                     // can't call GetTypes on a null (or dynamic?) assembly
                     continue;
@@ -51,6 +50,12 @@ namespace SelfHost2.Models
             }
 
             return result;
+        }
+
+        private static bool CanExplore(Assembly assembly)
+        {
+            return assembly != null &&
+                (!assembly.IsDynamic || assembly.FullName.Contains(AssemblyBuilder.DynamicAssemblyBuilderName));
         }
 
         private static Type[] GetTypes(Assembly assembly)

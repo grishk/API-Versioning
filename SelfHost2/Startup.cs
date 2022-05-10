@@ -53,8 +53,16 @@ namespace SelfHost2
             MarketControllerBuilder.Build();
             PingControllerBuilder.Build();
 
-            ApiBuilder.Register(new ApiFactory());
+            //ApiBuilder.Register(new ApiFactory());
             DomainServiceInit.Initialize();
+            new ODataRuntime.Builders.ApiBuilder()
+                .CofigureApiBuilder(b => 
+                {
+                    b.AddApi(new ODataRuntime.Impl.ApiControllers.ApiClient());
+                    b.AddApi(new ODataRuntime.Impl.ApiControllers.ApiSite());
+                    b.AddApi(new ODataRuntime.Impl.ApiControllers.ClientFeeApi());
+                })
+                .Build();
 
             // handling arror
             configuration.Services.Replace(typeof(IExceptionHandler), new CustomExceptionHandler());

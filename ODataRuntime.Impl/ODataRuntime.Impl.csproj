@@ -122,6 +122,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\ApiClient.cs" />
+    <Compile Include="ApiControllers\ApiSite.cs" />
+    <Compile Include="ApiControllers\ClientFeeApi.cs" />
     <Compile Include="Controllers\ClientApi.cs" />
     <Compile Include="Controllers\ClientFeeApi.cs" />
     <Compile Include="Controllers\SiteApi.cs" />
