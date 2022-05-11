@@ -3,9 +3,9 @@ using Microsoft.AspNet.OData.Query;
 using ODataRuntime.Interfaces;
 using ODataRuntime.Models;
 using ODataRuntime.Services;
-using Swashbuckle.Swagger.Annotations;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace ODataRuntime.Controllers
 {
@@ -13,9 +13,9 @@ namespace ODataRuntime.Controllers
         where TEntity : BaseEntity<TKey>
     {
         protected IEntityService<TKey, TEntity> Service { get; }
-        public BaseEntityODataController()
+        public BaseEntityODataController(IEntityService<TKey, TEntity> srv)
         {
-            Service = ServiceContainer.Get<IEntityService<TKey, TEntity>>();
+            Service = srv;
         }
 
         protected async Task<IHttpActionResult> DoDelete(TKey key) 
@@ -31,6 +31,8 @@ namespace ODataRuntime.Controllers
 
         protected async Task<IHttpActionResult> DoGet(TKey key)
         {
+            var svc = this.RequestContext.Configuration.DependencyResolver.GetService(typeof(IEntityService<TKey, TEntity>));
+
             var ret = await Service.Get(key);
             if (ret == null)
             {
@@ -42,6 +44,7 @@ namespace ODataRuntime.Controllers
 
         [EnableQuery]
         [HttpGet]
+        [ResponseType(typeof(object[]))]
         public async Task<IHttpActionResult> Get(ODataQueryOptions<TEntity> options)
         {
             var ret = await Service.Get(options);

@@ -26,6 +26,7 @@ namespace ODataRuntime.Builders
 
             BaseControllerType = baseType;
             _typeBuilder.SetParent(BaseControllerType);
+            _typeBuilder.CreatePassThroughConstructors(BaseControllerType);
         }
 
         public MethodBuilder CreateActionBuilder(string actioName, Type returnType, params Type[] parameters)

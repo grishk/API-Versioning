@@ -125,16 +125,10 @@
     <Compile Include="ApiControllers\ApiClient.cs" />
     <Compile Include="ApiControllers\ApiSite.cs" />
     <Compile Include="ApiControllers\ClientFeeApi.cs" />
-    <Compile Include="Controllers\ClientApi.cs" />
-    <Compile Include="Controllers\ClientFeeApi.cs" />
-    <Compile Include="Controllers\SiteApi.cs" />
-    <Compile Include="Controllers\ApiBuilder.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ImplModelConfiguration.cs" />
     <Compile Include="Models\Site.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DomainServiceInit.cs" />
-    <Compile Include="Services\ServicesDomainExtension.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

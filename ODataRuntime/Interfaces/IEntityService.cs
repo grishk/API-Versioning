@@ -1,8 +1,9 @@
 ﻿using ODataRuntime.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Query;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace ODataRuntime.Interfaces
 {

@@ -38,11 +38,9 @@ namespace ODataRuntime.Services
         {
             lock (lockEntitis) 
             {
-                var ret = options.ApplyTo(entitis.Values.AsQueryable())
-                    .OfType<TEntity>()
-                    .ToList() as IEnumerable<TEntity>;
+                var ret = options.ApplyTo(entitis.Values.AsQueryable()).OfType<TEntity>();
 
-                return Task.FromResult(ret);
+                return Task.FromResult(ret as IEnumerable<TEntity>);
             }
         }
 

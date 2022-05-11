@@ -9,13 +9,12 @@ namespace SelfHost2
     using Microsoft.AspNet.OData.Extensions;
     using Microsoft.AspNet.OData.Routing;
     using Microsoft.OData;
-    using Microsoft.OData.Edm;
     using Microsoft.OData.UriParser;
-    using Microsoft.Web.Http;
     using Newtonsoft.Json.Serialization;
-    using ODataRuntime.Impl.Controllers;
+    using Ninject;
     using ODataRuntime.Impl.Models;
-    using ODataRuntime.Impl.Services;
+    using ODataRuntime.Interfaces;
+    using ODataRuntime.Services;
     using SelfHost2.Models;
     using SeparateControllers.DynamicControllers;
     using System;
@@ -26,7 +25,6 @@ namespace SelfHost2
     using System.Web.Http.Description;
     using System.Web.Http.Dispatcher;
     using System.Web.Http.ExceptionHandling;
-    using static Microsoft.AspNet.OData.Query.AllowedQueryOptions;
     using static Microsoft.OData.ODataUrlKeyDelimiter;
     using static Microsoft.OData.ServiceLifetime;
 
@@ -53,8 +51,6 @@ namespace SelfHost2
             MarketControllerBuilder.Build();
             PingControllerBuilder.Build();
 
-            //ApiBuilder.Register(new ApiFactory());
-            DomainServiceInit.Initialize();
             new ODataRuntime.Builders.ApiBuilder()
                 .CofigureApiBuilder(b => 
                 {
@@ -99,7 +95,7 @@ namespace SelfHost2
 
             //           model.VocabularyAnnotations.Add(new ApiVersionAttribute("1.0"));
             // global odata query options
-            configuration.Count();
+            configuration.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
 
             // INFO: while you can use both, you should choose only ONE of the following; comment, uncomment, or remove as necessary
 
@@ -170,7 +166,9 @@ namespace SelfHost2
 
             configuration.Services.Replace(typeof(IHttpControllerSelector), new ThruApiVersionControllerSelector(configuration, opts));
 
-            builder.UseWebApi(configuration);
+            builder.UseNinject(CreateKernel);
+            builder.UseNinjectWebApi(configuration);
+//            builder.UseWebApi(configuration);
         }
 
         /// <summary>
@@ -205,6 +203,23 @@ namespace SelfHost2
         {
             builder.AddService<IODataPathHandler>(Singleton, sp => new DefaultODataPathHandler() { UrlKeyDelimiter = Parentheses });
             builder.AddService<ODataUriResolver>(Singleton, sp => new UnqualifiedCallAndEnumPrefixFreeResolver() { EnableCaseInsensitive = true });
+        }
+        static IKernel CreateKernel()
+        {
+            var kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+            RegisterDomainServices(kernel);
+            return kernel;
+        }
+
+        static void RegisterDomainServices(IKernel binder)
+        {
+            binder.Bind<IEntityService<int, Client>>()
+                .To<EntityServiceKeyInt<Client>>()
+                .InSingletonScope();
+            binder.Bind<IEntityService<int, Site>>()
+                .To<EntityServiceKeyInt<Site>>()
+                .InSingletonScope();
         }
     }
 }
