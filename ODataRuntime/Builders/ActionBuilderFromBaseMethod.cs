@@ -42,7 +42,6 @@ namespace ODataRuntime.Builders
                 generator.Emit(OpCodes.Ldarg, i + 1);
             }
 
-
             generator.Emit(OpCodes.Call, _BaseMethodInfo);
 
             generator.Emit(OpCodes.Ret);

@@ -9,6 +9,7 @@ namespace ODataRuntime.Impl.Models
         {
             builder.EntitySet<Client>(nameof(Client)).EntityType.HasKey(o => o.Key);
             builder.EntitySet<Site>(nameof(Site)).EntityType.HasKey(o => o.Key);
+            builder.EntityType<Site>().Function("Counter").Returns<double>().Parameter<int>("key");
             builder.Function("GetClientFee").Returns<decimal>().Parameter<int>("ClientId");
         }
     }

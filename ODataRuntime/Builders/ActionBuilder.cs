@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
-using Microsoft.Web.Http;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -16,6 +15,9 @@ namespace ODataRuntime.Builders
 {
     public abstract class ActionBuilder
     {
+        protected static readonly List<Delegate> _Delegates = new List<Delegate>();
+        private static readonly object _DelegateLock = new object();
+
         protected readonly static ConstructorInfo HttpGetConstructor = typeof(HttpGetAttribute).GetConstructor(Type.EmptyTypes);
         protected readonly static ConstructorInfo HttpDeleteConstructor = typeof(HttpDeleteAttribute).GetConstructor(Type.EmptyTypes);
         protected readonly static ConstructorInfo HttpPatchConstructor = typeof(HttpPatchAttribute).GetConstructor(Type.EmptyTypes);
@@ -78,6 +80,12 @@ namespace ODataRuntime.Builders
             _methodBuilder.DefineParameter(order, ParameterAttributes.In, name);
 
             return this;
+        }
+        protected static int AddDelegate(Delegate dlgt) {
+            lock (_DelegateLock) {
+                _Delegates.Add(dlgt);
+                return _Delegates.Count - 1;
+            }
         }
     }
 }

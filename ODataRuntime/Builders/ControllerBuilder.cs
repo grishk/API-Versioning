@@ -15,6 +15,8 @@ namespace ODataRuntime.Builders
         private readonly static ConstructorInfo _VersionNeutralConstructor = typeof(ApiVersionNeutralAttribute).GetConstructor(new Type[0]);
         private readonly static ConstructorInfo _ODataRoutePrefixConstructor = typeof(ODataRoutePrefixAttribute).GetConstructor(new[] { typeof(string) });
 
+        public PropertyInfo ServiceProperty { get; }
+
         protected readonly TypeBuilder _typeBuilder;
         public Type BaseControllerType { get; }
 
@@ -27,6 +29,7 @@ namespace ODataRuntime.Builders
             BaseControllerType = baseType;
             _typeBuilder.SetParent(BaseControllerType);
             _typeBuilder.CreatePassThroughConstructors(BaseControllerType);
+            ServiceProperty = baseType.GetProperty("Service", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
         public MethodBuilder CreateActionBuilder(string actioName, Type returnType, params Type[] parameters)
