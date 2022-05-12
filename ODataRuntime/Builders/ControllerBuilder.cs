@@ -9,11 +9,11 @@ namespace ODataRuntime.Builders
 {
     public class ControllerBuilder: IDisposable
     {
-        private const string ControllerSufix = ".EControllers";
+        private const string _ControllerSufix = ".EControllers";
 
-        private readonly static ConstructorInfo VersionConstructor = typeof(ApiVersionAttribute).GetConstructor(new[] { typeof(string) });
-        private readonly static ConstructorInfo VersionNeutralConstructor = typeof(ApiVersionNeutralAttribute).GetConstructor(new Type[0]);
-        private readonly static ConstructorInfo ODataRoutePrefixConstructor = typeof(ODataRoutePrefixAttribute).GetConstructor(new[] { typeof(string) });
+        private readonly static ConstructorInfo _VersionConstructor = typeof(ApiVersionAttribute).GetConstructor(new[] { typeof(string) });
+        private readonly static ConstructorInfo _VersionNeutralConstructor = typeof(ApiVersionNeutralAttribute).GetConstructor(new Type[0]);
+        private readonly static ConstructorInfo _ODataRoutePrefixConstructor = typeof(ODataRoutePrefixAttribute).GetConstructor(new[] { typeof(string) });
 
         protected readonly TypeBuilder _typeBuilder;
         public Type BaseControllerType { get; }
@@ -21,7 +21,7 @@ namespace ODataRuntime.Builders
         public ControllerBuilder(AssemblyBuilder assemblyBuilder, string controllerName, Type baseType) 
         {
             _typeBuilder = assemblyBuilder
-                .CreateTypeBuilder($"{ControllerSufix}.{controllerName}Controller",
+                .CreateTypeBuilder($"{_ControllerSufix}.{controllerName}Controller",
                 TypeAttributes.Public | TypeAttributes.Sealed | TypeAttributes.Class);
 
             BaseControllerType = baseType;
@@ -43,7 +43,7 @@ namespace ODataRuntime.Builders
             {
                 foreach (var version in versions)
                 {
-                    _typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(VersionConstructor, new object[] { version }));
+                    _typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(_VersionConstructor, new object[] { version }));
                 }
             }
 
@@ -52,7 +52,7 @@ namespace ODataRuntime.Builders
 
         public ControllerBuilder  AddVersionNeutral()
         {
-            _typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(VersionNeutralConstructor, new object[0]));
+            _typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(_VersionNeutralConstructor, new object[0]));
             return this;
         }
 
@@ -60,7 +60,7 @@ namespace ODataRuntime.Builders
         {
             if (!string.IsNullOrWhiteSpace(prefix))
             {
-                _typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(ODataRoutePrefixConstructor, new object[] { prefix }));
+                _typeBuilder.SetCustomAttribute(new CustomAttributeBuilder(_ODataRoutePrefixConstructor, new object[] { prefix }));
             }
 
             return this;

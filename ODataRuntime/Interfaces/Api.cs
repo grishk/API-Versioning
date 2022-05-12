@@ -8,8 +8,8 @@ namespace ODataRuntime.Interfaces
 {
     public abstract class Api
     {
-        private readonly string _controllerName;
-        private readonly Type _baseType;
+        private readonly string _ControllerName;
+        private readonly Type _BaseType;
 
         public Api(string controllerName): this(controllerName, typeof(ODataController))
         {
@@ -17,13 +17,13 @@ namespace ODataRuntime.Interfaces
 
         public Api(string controllerName, Type baseType)
         {
-            _controllerName = controllerName;
-            _baseType = baseType;
+            _ControllerName = controllerName;
+            _BaseType = baseType;
         }
 
         public void Create(AssemblyBuilder assemblyBuilder)
         {
-            using (var controllerBuilder = new ControllerBuilder(assemblyBuilder, _controllerName, _baseType))
+            using (var controllerBuilder = new ControllerBuilder(assemblyBuilder, _ControllerName, _BaseType))
             {
                 Register(controllerBuilder);
             }

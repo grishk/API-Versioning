@@ -6,14 +6,14 @@ namespace ODataRuntime.Builders
 {
     public class ActionBuilderFromBaseMethod: ActionBuilder
     {
-        private readonly MethodInfo _baseMethodInfo;
+        private readonly MethodInfo _BaseMethodInfo;
 
         public ActionBuilderFromBaseMethod(ControllerBuilder controllerBuilder, string actioName, string methodName)
         {
-            _baseMethodInfo = controllerBuilder.BaseControllerType
+            _BaseMethodInfo = controllerBuilder.BaseControllerType
                 .GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance); ;
-            var returnType = _baseMethodInfo.ReturnType;
-            var parameters = _baseMethodInfo.GetParameters()
+            var returnType = _BaseMethodInfo.ReturnType;
+            var parameters = _BaseMethodInfo.GetParameters()
                 .Select(p => p.ParameterType)
                 .ToArray();
 
@@ -23,7 +23,7 @@ namespace ODataRuntime.Builders
 
         public ActionBuilder SetBaseMethod()
         {
-            var prms = _baseMethodInfo.GetParameters();
+            var prms = _BaseMethodInfo.GetParameters();
 
             var generator = _methodBuilder.GetILGenerator();
 
@@ -43,7 +43,7 @@ namespace ODataRuntime.Builders
             }
 
 
-            generator.Emit(OpCodes.Call, _baseMethodInfo);
+            generator.Emit(OpCodes.Call, _BaseMethodInfo);
 
             generator.Emit(OpCodes.Ret);
 

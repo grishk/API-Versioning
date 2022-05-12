@@ -8,27 +8,27 @@ namespace ODataRuntime.Builders
     {
         public const string DynamicAssemblyBuilderName = "DynamicContollers";
 
-        private ModuleBuilder _moduleBuilder;
+        private ModuleBuilder _ModuleBuilder;
 
-        private readonly string _name;
+        private readonly string _Name;
 
         public AssemblyBuilder(string name)
         {
-            _name = $"{DynamicAssemblyBuilderName}.{name}";
+            _Name = $"{DynamicAssemblyBuilderName}.{name}";
             Initialize();
         }
 
         protected void Initialize() 
         {
-            var assemblyName = new AssemblyName(_name);
+            var assemblyName = new AssemblyName(_Name);
             System.Reflection.Emit.AssemblyBuilder assemblyBuilder =
                 AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
-            _moduleBuilder = assemblyBuilder.DefineDynamicModule(_name + ".dll", true);
+            _ModuleBuilder = assemblyBuilder.DefineDynamicModule(_Name + ".dll", true);
         }
 
         public TypeBuilder CreateTypeBuilder(string sufixName, TypeAttributes attr) 
         {
-            return _moduleBuilder.DefineType($"{_moduleBuilder.Assembly.GetName().Name}{sufixName}", attr);
+            return _ModuleBuilder.DefineType($"{_ModuleBuilder.Assembly.GetName().Name}{sufixName}", attr);
         }
 
         public static AssemblyBuilder CreateAssebly(string name)

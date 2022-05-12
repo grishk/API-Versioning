@@ -7,10 +7,10 @@ namespace ODataRuntime.Builders
 {
     public class ApiBuilder
     {
-        private const string defaultAssemblyName = "DynamycApi";
+        private const string _DefaultAssemblyName = "DynamycApi";
 
-        private static int counter;
-        private List<Api> _container = new List<Api>();
+        private static int _Counter;
+        private readonly List<Api> _Container = new List<Api>();
         protected readonly AssemblyBuilder _assemblyBuilder;
 
         public ApiBuilder(string assemblyName = null)
@@ -18,8 +18,8 @@ namespace ODataRuntime.Builders
             
             if (string.IsNullOrWhiteSpace(assemblyName))
             {
-                int next = Interlocked.Increment(ref counter);
-                assemblyName = $"{defaultAssemblyName}{next}";
+                int next = Interlocked.Increment(ref _Counter);
+                assemblyName = $"{_DefaultAssemblyName}{next}";
             }
 
             _assemblyBuilder = new AssemblyBuilder(assemblyName);
@@ -27,15 +27,15 @@ namespace ODataRuntime.Builders
 
         public ApiBuilder AddApi(Api api) 
         {
-            _container.Add(api);
+            _Container.Add(api);
 
             return this;
         }
 
         public ApiBuilder Build() 
         {
-            _container.ForEach(api => api.Create(_assemblyBuilder));
-            _container.Clear();
+            _Container.ForEach(api => api.Create(_assemblyBuilder));
+            _Container.Clear();
 
             return this;
         }

@@ -7,10 +7,19 @@ using System.Web.Http.Dispatcher;
 
 namespace SelfHost2.Models
 {
+    /// <summary>
+    /// a difference from DefaultHttpControllerTypeResolver only in CanExplore(assembly) 
+    /// assembly.FullName.Contains(AssemblyBuilder.DynamicAssemblyBuilderName) check added
+    /// </summary>
     public class CustomHttpControllerTypeResolver : DefaultHttpControllerTypeResolver
     {
-        private Func<Assembly, Type[]> _getTypesFunc = GetTypes;
+        private readonly Func<Assembly, Type[]> _GetTypesFunc = GetTypes;
 
+        /// <summary>
+        /// CanExplore(assembly) added
+        /// </summary>
+        /// <param name="assembliesResolver"></param>
+        /// <returns></returns>
         public override ICollection<Type> GetControllerTypes(IAssembliesResolver assembliesResolver)
         {
             List<Type> result = new List<Type>();
@@ -28,7 +37,7 @@ namespace SelfHost2.Models
 
                 try
                 {
-                    exportedTypes = _getTypesFunc(assembly);
+                    exportedTypes = _GetTypesFunc(assembly);
                 }
                 catch (ReflectionTypeLoadException ex)
                 {
