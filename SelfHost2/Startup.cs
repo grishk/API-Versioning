@@ -1,4 +1,5 @@
-﻿using SeparateControllers.Models;
+﻿using ODataRuntime.Impl.ApiControllers;
+using SeparateControllers.Models;
 using Swashbuckle.Application;
 
 namespace SelfHost2
@@ -54,9 +55,9 @@ namespace SelfHost2
             new ODataRuntime.Builders.ApiBuilder()
                 .CofigureApiBuilder(b => 
                 {
-                    b.AddApi(new ODataRuntime.Impl.ApiControllers.ApiClient());
-                    b.AddApi(new ODataRuntime.Impl.ApiControllers.ApiSite());
-                    b.AddApi(new ODataRuntime.Impl.ApiControllers.ClientFeeApi());
+                    b.AddApi(new ApiClient(b.AssemblyBuilder));
+                    b.AddApi(new ApiSite(b.AssemblyBuilder));
+                    b.AddApi(new ClientFeeApi(b.AssemblyBuilder));
                 })
                 .Build();
 

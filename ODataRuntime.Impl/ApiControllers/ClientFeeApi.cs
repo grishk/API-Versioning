@@ -9,7 +9,7 @@ namespace ODataRuntime.Impl.ApiControllers
     public class ClientFeeApi : Api
     {
         private const string _ControllerName = "ClientFee";
-        public ClientFeeApi() : base(_ControllerName)
+        public ClientFeeApi(AssemblyBuilder assemblyBuilder) : base(_ControllerName, assemblyBuilder)
         {
         }
 

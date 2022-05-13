@@ -207,11 +207,5 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IMS\UP\Server\Network\IMS.UP.Server.Network.csproj">
-      <Project>{01b7e987-a7ea-4bf4-978f-36bc5a72bf1c}</Project>
-      <Name>IMS.UP.Server.Network</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

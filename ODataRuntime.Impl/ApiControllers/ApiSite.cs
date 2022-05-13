@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ODataRuntime.Impl.ApiControllers
 {
-    public class ApiSite : Api<Site>
+    public class ApiSite : ModelApi<Site>
     {
         public override void Register(ControllerBuilder controllerBuilder) {
             controllerBuilder.AddODataRoutePrefix(nameof(Site));
@@ -43,5 +43,7 @@ namespace ODataRuntime.Impl.ApiControllers
                 .AddResponseType(typeof(double))
                 .AddSwaggerResponse(HttpStatusCode.OK, "Get Site counter", typeof(double));
         }
+
+        public ApiSite(AssemblyBuilder assemblyBuilder) : base(assemblyBuilder) { }
     }
 }

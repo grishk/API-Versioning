@@ -134,6 +134,7 @@
     <Compile Include="Interfaces\Api.cs" />
     <Compile Include="Builders\ApiBuilder.cs" />
     <Compile Include="Interfaces\IEntityService.cs" />
+    <Compile Include="Interfaces\ModelApi.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\EntityKeyInt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,44 +6,34 @@ using System;
 
 namespace ODataRuntime.Interfaces
 {
-    public abstract class Api
+    public abstract class Api : IDisposable
     {
-        private readonly string _ControllerName;
-        private readonly Type _BaseType;
+        private readonly ControllerBuilder _ControllerBuilder;
 
-        public Api(string controllerName): this(controllerName, typeof(ODataController))
-        {
+        protected Api(string controllerName, AssemblyBuilder assemblyBuilder) : this(controllerName, typeof(ODataController), assemblyBuilder) {
+            
         }
 
-        public Api(string controllerName, Type baseType)
+        protected Api(string controllerName, Type baseType, AssemblyBuilder assemblyBuilder)
         {
-            _ControllerName = controllerName;
-            _BaseType = baseType;
+            _ControllerBuilder = new ControllerBuilder(assemblyBuilder, controllerName, baseType);
         }
 
-        public void Create(AssemblyBuilder assemblyBuilder)
-        {
-            using (var controllerBuilder = new ControllerBuilder(assemblyBuilder, _ControllerName, _BaseType))
-            {
-                Register(controllerBuilder);
-            }
+        public void Create() {
+            Register(_ControllerBuilder);
         } 
 
         public abstract void Register(ControllerBuilder controllerBuilder);
-    }
 
-    public abstract class Api<TEntity> : Api
-        where TEntity : EntityKeyInt
-    {
-        public Api(): base(typeof(TEntity).Name, typeof(BaseEntityODataControllerInt<TEntity>))
-        {
+        public void Dispose() {
+            _ControllerBuilder?.Dispose();
         }
     }
 
-    public abstract class Api<TKey, TEntity> : Api
+    public abstract class ModelApi<TKey, TEntity> : Api
         where TEntity : BaseEntity<TKey>
     {
-        public Api() : base(typeof(TEntity).Name, typeof(BaseEntityODataController<TKey,TEntity>))
+        protected ModelApi(AssemblyBuilder assemblyBuilder) : base(typeof(TEntity).Name, typeof(BaseEntityODataController<TKey,TEntity>), assemblyBuilder)
         {
         }
     }
