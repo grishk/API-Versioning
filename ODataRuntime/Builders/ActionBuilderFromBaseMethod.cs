@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using Microsoft.AspNet.OData;
 
 namespace ODataRuntime.Builders
 {
@@ -36,7 +37,7 @@ namespace ODataRuntime.Builders
 
                 if (prm.Name.Equals("key") || prm.Name.Equals("id"))
                 {
-                    paramInfo.SetCustomAttribute(new CustomAttributeBuilder(FromODataUriConstructor, new object[0]));
+                    paramInfo.SetCustomAttribute(CreateAttribute<FromODataUriAttribute>());
                 }
 
                 generator.Emit(OpCodes.Ldarg, i + 1);

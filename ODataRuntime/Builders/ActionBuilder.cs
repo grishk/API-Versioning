@@ -3,6 +3,7 @@ using Microsoft.AspNet.OData.Routing;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -18,17 +19,19 @@ namespace ODataRuntime.Builders
         protected static readonly List<Delegate> _Delegates = new List<Delegate>();
         private static readonly object _DelegateLock = new object();
 
-        protected readonly static ConstructorInfo HttpGetConstructor = typeof(HttpGetAttribute).GetConstructor(Type.EmptyTypes);
-        protected readonly static ConstructorInfo HttpDeleteConstructor = typeof(HttpDeleteAttribute).GetConstructor(Type.EmptyTypes);
-        protected readonly static ConstructorInfo HttpPatchConstructor = typeof(HttpPatchAttribute).GetConstructor(Type.EmptyTypes);
-        protected readonly static ConstructorInfo HttpPutConstructor = typeof(HttpPutAttribute).GetConstructor(Type.EmptyTypes);
-        protected readonly static ConstructorInfo HttpPostConstructor = typeof(HttpPostAttribute).GetConstructor(Type.EmptyTypes);
-        protected readonly static ConstructorInfo ODataRouteConstructor = typeof(ODataRouteAttribute).GetConstructor(new[] { typeof(string) });
-        protected readonly static ConstructorInfo SwaggerResponseConstructor = typeof(SwaggerResponseAttribute).GetConstructor(new[] { typeof(HttpStatusCode), typeof(string), typeof(Type) });
-        protected readonly static ConstructorInfo ResponseTypeConstructor = typeof(ResponseTypeAttribute).GetConstructor(new[] { typeof(Type) });
-        protected readonly static ConstructorInfo FromODataUriConstructor = typeof(FromODataUriAttribute).GetConstructor(Type.EmptyTypes);
-        protected readonly static ConstructorInfo SelectConstructor = typeof(EnableQueryAttribute).GetConstructor(Type.EmptyTypes);
-        protected readonly static PropertyInfo ModelBinderNameProperty = typeof(ModelBinderAttribute).GetProperty(nameof(ModelBinderAttribute.Name), BindingFlags.Public | BindingFlags.Instance);
+        //protected readonly static ConstructorInfo ODataRouteConstructor1 = typeof(ODataRouteAttribute).GetConstructor(new[] { typeof(string) });
+        //protected readonly static ConstructorInfo SwaggerResponseConstructor1 = typeof(SwaggerResponseAttribute).GetConstructor(new[] { typeof(HttpStatusCode), typeof(string), typeof(Type) });
+        //protected readonly static ConstructorInfo ResponseTypeConstructor1 = typeof(ResponseTypeAttribute).GetConstructor(new[] { typeof(Type) });
+        //protected readonly static ConstructorInfo FromODataUriConstructor1 = typeof(FromODataUriAttribute).GetConstructor(Type.EmptyTypes);
+        //protected readonly static ConstructorInfo SelectConstructor = typeof(EnableQueryAttribute).GetConstructor(Type.EmptyTypes);
+        //protected readonly static PropertyInfo ModelBinderNameProperty = typeof(ModelBinderAttribute).GetProperty(nameof(ModelBinderAttribute.Name), BindingFlags.Public | BindingFlags.Instance);
+
+        protected static CustomAttributeBuilder CreateAttribute<T>(params object[] args)
+        {
+            ConstructorInfo constructor = typeof(T).GetConstructor(args.Select(x => x.GetType()).ToArray());
+            return new CustomAttributeBuilder(constructor, args);
+        }
+
 
         protected MethodBuilder _methodBuilder;
 
@@ -42,27 +45,27 @@ namespace ODataRuntime.Builders
         public ActionBuilder AddHttpVerb(HttpMethod method)
         {
             if (method == HttpMethod.Get)
-                _methodBuilder.SetCustomAttribute(new CustomAttributeBuilder(HttpGetConstructor, new object[0]));
+                _methodBuilder.SetCustomAttribute(CreateAttribute<HttpGetAttribute>());
             else if (method == HttpMethod.Post)
-                _methodBuilder.SetCustomAttribute(new CustomAttributeBuilder(HttpPostConstructor, new object[0]));
+                _methodBuilder.SetCustomAttribute(CreateAttribute< HttpPostAttribute>());
             else if (method == HttpMethod.Put)
-                _methodBuilder.SetCustomAttribute(new CustomAttributeBuilder(HttpPutConstructor, new object[0]));
+                _methodBuilder.SetCustomAttribute(CreateAttribute<HttpPutAttribute>());
             else if (method == HttpMethod.Delete)
-                _methodBuilder.SetCustomAttribute(new CustomAttributeBuilder(HttpDeleteConstructor, new object[0]));
+                _methodBuilder.SetCustomAttribute(CreateAttribute<HttpDeleteAttribute>());
 
             return this;
         }
 
         public ActionBuilder AddODataRoute(string route)
         {
-            _methodBuilder.SetCustomAttribute(new CustomAttributeBuilder(ODataRouteConstructor, new object[] { route }));
+            _methodBuilder.SetCustomAttribute(CreateAttribute<ODataRouteAttribute>(route));
 
             return this;
         }
 
         public ActionBuilder AddSwaggerResponse(HttpStatusCode status, string description = null, Type returnType = null)
         {
-            _methodBuilder.SetCustomAttribute(new CustomAttributeBuilder(SwaggerResponseConstructor,
+            _methodBuilder.SetCustomAttribute(CreateAttribute<SwaggerResponseAttribute>(                
                 new object[] { status, description, returnType }));
 
             return this;
@@ -70,7 +73,7 @@ namespace ODataRuntime.Builders
 
         public ActionBuilder AddResponseType(Type type)
         {
-            _methodBuilder.SetCustomAttribute(new CustomAttributeBuilder(ResponseTypeConstructor, new object[] { type }));
+            _methodBuilder.SetCustomAttribute(CreateAttribute<ResponseTypeAttribute>(type));
 
             return this;
         }
