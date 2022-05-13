@@ -125,8 +125,10 @@
     <Compile Include="ApiControllers\ApiClient.cs" />
     <Compile Include="ApiControllers\ApiSite.cs" />
     <Compile Include="ApiControllers\ClientFeeApi.cs" />
+    <Compile Include="ApiControllers\PeopleApi.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ImplModelConfiguration.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Site.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
