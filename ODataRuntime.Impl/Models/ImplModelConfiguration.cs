@@ -7,6 +7,7 @@ namespace ODataRuntime.Impl.Models
     {
         public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
         {
+            builder.EntitySet<Manager>(nameof(Manager)).EntityType.HasKey(o => o.Key);
             builder.EntitySet<Client>(nameof(Client)).EntityType.HasKey(o => o.Key);
             builder.EntitySet<Site>(nameof(Site)).EntityType.HasKey(o => o.Key);
             builder.EntityType<Site>().Function("Counter").Returns<double>().Parameter<int>("key");

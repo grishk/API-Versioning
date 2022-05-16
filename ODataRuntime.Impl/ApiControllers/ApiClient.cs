@@ -10,8 +10,7 @@ namespace ODataRuntime.Impl.ApiControllers
     {
         public override void Register(ControllerBuilder controllerBuilder)
         {
-            SetDefaultRoute();
-            controllerBuilder.AddODataRoutePrefix(nameof(Client));
+            controllerBuilder.SetRoute(nameof(Client));
             controllerBuilder.AddVersion("0.3");
             var actionBuilderGet = new ActionBuilderFromBaseMethod(controllerBuilder, "Get", "DoGet");
             actionBuilderGet

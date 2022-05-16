@@ -58,6 +58,7 @@ namespace SelfHost2
                     b.AddApi(new ApiClient(b.AssemblyBuilder));
                     b.AddApi(new ApiSite(b.AssemblyBuilder));
                     b.AddApi(new ClientFeeApi(b.AssemblyBuilder));
+                    b.AddApi(new ManagerApi(b.AssemblyBuilder));
                 })
                 .Build();
 
@@ -221,6 +222,10 @@ namespace SelfHost2
             binder.Bind<IEntityService<int, Site>>()
                 .To<EntityServiceKeyInt<Site>>()
                 .InSingletonScope();
+            binder.Bind<IEntityService<int, Manager>>()
+                  .To<EntityServiceKeyInt<Manager>>()
+                  .InSingletonScope();
+
         }
     }
 }

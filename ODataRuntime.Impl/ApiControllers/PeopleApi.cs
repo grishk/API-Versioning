@@ -6,19 +6,17 @@ using ODataRuntime.Interfaces;
 
 namespace ODataRuntime.Impl.ApiControllers
 {
-    public class PeopleApi: ModelApi<Person>
+    public class ManagerApi : ModelApi<Manager>
     {
         public override void Register(ControllerBuilder controllerBuilder)
         {
-            controllerBuilder.AddODataRoutePrefix(nameof(Person));
-            controllerBuilder.AddVersion("3");
-            var actionBuilderGet = new ActionBuilderFromBaseMethod(controllerBuilder, "Get", "DoGet");
-            actionBuilderGet
-                .AddHttpVerb(HttpMethod.Get)
-                .AddResponseType(typeof(Person))
-                .AddSwaggerResponse(HttpStatusCode.OK, "Client by Id", typeof(Client));
+            SetDefaultRoute();
+            controllerBuilder.AddVersion("7");
+            RegisterGet();
         }
 
-        public PeopleApi(AssemblyBuilder assemblyBuilder) : base(assemblyBuilder) { }
+       
+
+        public ManagerApi(AssemblyBuilder assemblyBuilder) : base(assemblyBuilder) { }
     }
 }

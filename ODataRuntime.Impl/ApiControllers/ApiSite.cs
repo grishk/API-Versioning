@@ -12,7 +12,7 @@ namespace ODataRuntime.Impl.ApiControllers
     public class ApiSite : ModelApi<Site>
     {
         public override void Register(ControllerBuilder controllerBuilder) {
-            controllerBuilder.AddODataRoutePrefix(nameof(Site));
+            controllerBuilder.SetRoute(nameof(Site));
             controllerBuilder.AddVersion("0.4");
             var actionBuilderGet = new ActionBuilderFromBaseMethod(controllerBuilder, "Get", "DoGet");
             actionBuilderGet

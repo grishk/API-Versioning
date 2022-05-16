@@ -35,6 +35,7 @@ namespace ODataRuntime.Builders
         public ApiBuilder Build() 
         {
             _Container.ForEach(api => api.Create());
+            _Container.ForEach(api => api.Dispose());
             _Container.Clear();
 
             return this;

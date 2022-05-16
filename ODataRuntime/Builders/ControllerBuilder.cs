@@ -59,7 +59,7 @@ namespace ODataRuntime.Builders
             return this;
         }
 
-        public ControllerBuilder AddODataRoutePrefix(string prefix)
+        public ControllerBuilder SetRoute(string prefix)
         {
             if (!string.IsNullOrWhiteSpace(prefix))
             {

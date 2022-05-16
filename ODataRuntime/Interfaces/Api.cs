@@ -10,6 +10,8 @@ namespace ODataRuntime.Interfaces
     {
         private readonly ControllerBuilder _ControllerBuilder;
 
+        protected ControllerBuilder ControllerBuilder => _ControllerBuilder;
+
         protected Api(string controllerName, AssemblyBuilder assemblyBuilder) : this(controllerName, typeof(ODataController), assemblyBuilder) {
             
         }
