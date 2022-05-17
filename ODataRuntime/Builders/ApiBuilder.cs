@@ -34,18 +34,17 @@ namespace ODataRuntime.Builders
 
         public ApiBuilder Build() 
         {
-            _Container.ForEach(api => api.Create());
-            _Container.ForEach(api => api.Dispose());
+            _Container.ForEach(api => api.Create(AssemblyBuilder));
             _Container.Clear();
 
             return this;
         }
 
-        public ApiBuilder CofigureApiBuilder(Action<ApiBuilder> configure)
+        public ApiBuilder ConfigureApiBuilder(Action<ApiBuilder> configure)
         {
             if (configure == null) 
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(configure));
             }
 
             configure(this);

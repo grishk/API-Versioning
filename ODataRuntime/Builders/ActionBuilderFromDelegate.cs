@@ -21,14 +21,14 @@ namespace ODataRuntime.Builders
                 .Select(p=>p.ParameterType)
                 .ToArray();
 
-            _methodBuilder = controllerBuilder.CreateActionBuilder(actioName, returnType, parameters);
+            MethodBuilder = controllerBuilder.CreateActionBuilder(actioName, returnType, parameters);
             SetDelegate();
         }
 
         private ActionBuilder SetDelegate()
         {
             ParameterInfo[] prms = _Method.Method.GetParameters();
-            ILGenerator generator = _methodBuilder.GetILGenerator();
+            ILGenerator generator = MethodBuilder.GetILGenerator();
             int index = AddDelegate(_Method);
 
             generator.Emit(OpCodes.Ldc_I4, prms.Length);
@@ -49,7 +49,7 @@ namespace ODataRuntime.Builders
                 } else {
                     int pos = (hasService ? i : i + 1);
                     generator.Emit(OpCodes.Ldarg, pos);
-                    _methodBuilder.DefineParameter(pos, ParameterAttributes.In, prm.Name);
+                    MethodBuilder.DefineParameter(pos, ParameterAttributes.In, prm.Name);
                 }
 
                 if (prm.ParameterType.IsValueType)
@@ -64,9 +64,9 @@ namespace ODataRuntime.Builders
 
             generator.Emit(OpCodes.Call, GetDoDelegateRetPropertyInfo());
 
-            if (_methodBuilder.ReturnType.IsValueType)
+            if (MethodBuilder.ReturnType.IsValueType)
             {
-                generator.Emit(OpCodes.Unbox_Any, _methodBuilder.ReturnType);
+                generator.Emit(OpCodes.Unbox_Any, MethodBuilder.ReturnType);
             }
 
             generator.Emit(OpCodes.Ret);
@@ -99,16 +99,16 @@ namespace ODataRuntime.Builders
             return ret;
         }
 
-        private static MethodInfo _doDelegateRetMethodInfo;
+        private static MethodInfo _DoDelegateRetMethodInfo;
         private static MethodInfo GetDoDelegateRetPropertyInfo()
         {
-            if (_doDelegateRetMethodInfo == null)
+            if (_DoDelegateRetMethodInfo == null)
             {
-                _doDelegateRetMethodInfo = typeof(ActionBuilderFromDelegate)
+                _DoDelegateRetMethodInfo = typeof(ActionBuilderFromDelegate)
                     .GetMethod(nameof(DoDelegateRet), BindingFlags.Public | BindingFlags.Static);
             }
 
-            return _doDelegateRetMethodInfo;
+            return _DoDelegateRetMethodInfo;
         }
     }
 }

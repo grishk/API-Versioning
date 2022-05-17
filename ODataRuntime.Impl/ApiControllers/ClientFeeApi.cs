@@ -6,12 +6,9 @@ using System.Net.Http;
 
 namespace ODataRuntime.Impl.ApiControllers
 {
-    public class ClientFeeApi : Api
-    {
+    public class ClientFeeApi : UnboundApi {
         private const string _ControllerName = "ClientFee";
-        public ClientFeeApi(AssemblyBuilder assemblyBuilder) : base(_ControllerName, assemblyBuilder)
-        {
-        }
+        public ClientFeeApi() : base(_ControllerName) { }
 
         public override void Register(ControllerBuilder controllerBuilder)
         {

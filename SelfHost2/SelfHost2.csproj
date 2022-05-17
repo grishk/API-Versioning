@@ -17,6 +17,7 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac.WebApi2.Owin" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNet.OData" Version="7.5.8" />
     <PackageReference Include="Microsoft.AspNet.OData.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNet.OData.Versioning.ApiExplorer" Version="5.0.0" />
@@ -24,9 +25,6 @@
     <PackageReference Include="Microsoft.OData.Core" Version="7.10.0" />
     <PackageReference Include="Microsoft.OData.Edm" Version="7.10.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Ninject.Web.Common" Version="3.3.2" />
-    <PackageReference Include="Ninject.Web.WebApi" Version="3.3.1" />
-    <PackageReference Include="Ninject.Web.WebApi.OwinSelfHost" Version="3.3.1" />
     <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
   </ItemGroup>
   <ItemGroup>

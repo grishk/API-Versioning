@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace ODataRuntime.Impl.ApiControllers
 {
-    public class ApiSite : ModelApi<Site>
-    {
+    public class ApiSite : ModelApi<Site> {
         public override void Register(ControllerBuilder controllerBuilder) {
             controllerBuilder.SetRoute(nameof(Site));
             controllerBuilder.AddVersion("0.4");
@@ -26,17 +25,7 @@ namespace ODataRuntime.Impl.ApiControllers
                 .AddResponseType(typeof(Site))
                 .AddSwaggerResponse(HttpStatusCode.OK, "Add Site", typeof(Site));
 
-            Func<int, EntityServiceKeyInt<Site>, Task<double>> count = async (key, srv) => {
-                var ret = await srv.Get(key);
-
-                if (ret == null) {
-                    return 0.001;
-                }
-
-                return ret.Counter;
-            };
-
-        var actionBuilderCount = new ActionBuilderFromDelegate(controllerBuilder, "Counter", count);
+            var actionBuilderCount = new ActionBuilderFromDelegate(controllerBuilder, "Counter", Count);
             actionBuilderCount
                 .AddHttpVerb(HttpMethod.Get)
                 .AddODataRoute("({key})/Counter")
@@ -44,6 +33,15 @@ namespace ODataRuntime.Impl.ApiControllers
                 .AddSwaggerResponse(HttpStatusCode.OK, "Get Site counter", typeof(double));
         }
 
-        public ApiSite(AssemblyBuilder assemblyBuilder) : base(assemblyBuilder) { }
+        private static async Task<double> Count(int key, EntityServiceKeyInt<Site> srv){
+            var ret = await srv.Get(key);
+
+            if (ret == null) {
+                return 0.001;
+            }
+
+            return ret.Counter;
+        }
+
     }
 }

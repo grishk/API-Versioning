@@ -1,42 +1,38 @@
-﻿using Microsoft.AspNet.OData;
+﻿using System;
+using Microsoft.AspNet.OData;
 using ODataRuntime.Builders;
 using ODataRuntime.Controllers;
 using ODataRuntime.Models;
-using System;
 
-namespace ODataRuntime.Interfaces
-{
-    public abstract class Api : IDisposable
-    {
-        private readonly ControllerBuilder _ControllerBuilder;
+namespace ODataRuntime.Interfaces {
+    public abstract class Api {
+        private readonly Type _ControllerBaseType;
+        private readonly string _ControllerName;
 
-        protected ControllerBuilder ControllerBuilder => _ControllerBuilder;
+        protected ControllerBuilder ControllerBuilder { get; private set; }
 
-        protected Api(string controllerName, AssemblyBuilder assemblyBuilder) : this(controllerName, typeof(ODataController), assemblyBuilder) {
-            
+        protected Api(string controllerName, Type baseType) {
+            _ControllerName = controllerName;
+            _ControllerBaseType = baseType;
         }
 
-        protected Api(string controllerName, Type baseType, AssemblyBuilder assemblyBuilder)
-        {
-            _ControllerBuilder = new ControllerBuilder(assemblyBuilder, controllerName, baseType);
+        public void Create(AssemblyBuilder assemblyBuilder) {
+            using (ControllerBuilder = new ControllerBuilder(assemblyBuilder, _ControllerName, _ControllerBaseType)) {
+                Register(ControllerBuilder);
+                ControllerBuilder = null;
+            }
         }
-
-        public void Create() {
-            Register(_ControllerBuilder);
-        } 
 
         public abstract void Register(ControllerBuilder controllerBuilder);
-
-        public void Dispose() {
-            _ControllerBuilder?.Dispose();
-        }
     }
 
-    public abstract class ModelApi<TKey, TEntity> : Api
-        where TEntity : BaseEntity<TKey>
-    {
-        protected ModelApi(AssemblyBuilder assemblyBuilder) : base(typeof(TEntity).Name, typeof(BaseEntityODataController<TKey,TEntity>), assemblyBuilder)
-        {
-        }
+    public abstract class BoundApi<TKey, TEntity> : Api
+        where TEntity: BaseEntity<TKey> {
+        protected BoundApi()
+            : base(typeof(TEntity).Name, typeof(BaseEntityODataController<TKey, TEntity>)) { }
+    }
+
+    public abstract class UnboundApi : Api {
+        protected UnboundApi(string controllerName) : base(controllerName, typeof(ODataController)) { }
     }
 }

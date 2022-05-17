@@ -1,17 +1,11 @@
 ﻿using System.Net;
 using System.Net.Http;
 using ODataRuntime.Builders;
-using ODataRuntime.Controllers;
 using ODataRuntime.Models;
 
 namespace ODataRuntime.Interfaces {
-    public abstract class ModelApi<TModel> : Api
-        where TModel : EntityKeyInt
-    {
-        protected ModelApi(AssemblyBuilder assemblyBuilder) : base(typeof(TModel).Name, typeof(BaseEntityODataControllerInt<TModel>), assemblyBuilder)
-        {
-        }
-
+    public abstract class ModelApi<TModel> : BoundApi<int, TModel>
+        where TModel: EntityKeyInt {
         protected void SetDefaultRoute() {
             ControllerBuilder.SetRoute(nameof(TModel));
         }
@@ -21,7 +15,7 @@ namespace ODataRuntime.Interfaces {
             result
                 .AddHttpVerb(HttpMethod.Get)
                 .AddResponseType(typeof(TModel))
-                .AddSwaggerResponse(HttpStatusCode.OK, nameof(TModel) + " by Id", typeof(TModel));
+                .AddSwaggerResponse(HttpStatusCode.OK, typeof(TModel).Name + " by Id", typeof(TModel));
             return result;
         }
     }

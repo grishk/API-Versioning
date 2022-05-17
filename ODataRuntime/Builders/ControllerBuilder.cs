@@ -4,6 +4,7 @@ using Microsoft.Web.Http;
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
+using ODataRuntime.Builders.Helpers;
 
 namespace ODataRuntime.Builders
 {

@@ -11,6 +11,7 @@ using System.Reflection.Emit;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
+using static ODataRuntime.Builders.AttributeHelper;
 
 namespace ODataRuntime.Builders
 {
@@ -26,46 +27,39 @@ namespace ODataRuntime.Builders
         //protected readonly static ConstructorInfo SelectConstructor = typeof(EnableQueryAttribute).GetConstructor(Type.EmptyTypes);
         //protected readonly static PropertyInfo ModelBinderNameProperty = typeof(ModelBinderAttribute).GetProperty(nameof(ModelBinderAttribute.Name), BindingFlags.Public | BindingFlags.Instance);
 
-        protected static CustomAttributeBuilder CreateAttribute<T>(params object[] args)
-        {
-            ConstructorInfo constructor = typeof(T).GetConstructor(args.Select(x => x.GetType()).ToArray());
-            return new CustomAttributeBuilder(constructor, args);
-        }
-
-
-        protected MethodBuilder _methodBuilder;
+        protected MethodBuilder MethodBuilder;
 
         protected ActionBuilder() { }
 
         public ActionBuilder(ControllerBuilder controllerBuilder, string actioName, Type returnType, params Type[] parameters) 
         {
-            _methodBuilder = controllerBuilder.CreateActionBuilder(actioName, returnType, parameters);
+            MethodBuilder = controllerBuilder.CreateActionBuilder(actioName, returnType, parameters);
         }
 
         public ActionBuilder AddHttpVerb(HttpMethod method)
         {
             if (method == HttpMethod.Get)
-                _methodBuilder.SetCustomAttribute(CreateAttribute<HttpGetAttribute>());
+                MethodBuilder.SetCustomAttribute(CreateAttribute<HttpGetAttribute>());
             else if (method == HttpMethod.Post)
-                _methodBuilder.SetCustomAttribute(CreateAttribute< HttpPostAttribute>());
+                MethodBuilder.SetCustomAttribute(CreateAttribute< HttpPostAttribute>());
             else if (method == HttpMethod.Put)
-                _methodBuilder.SetCustomAttribute(CreateAttribute<HttpPutAttribute>());
+                MethodBuilder.SetCustomAttribute(CreateAttribute<HttpPutAttribute>());
             else if (method == HttpMethod.Delete)
-                _methodBuilder.SetCustomAttribute(CreateAttribute<HttpDeleteAttribute>());
+                MethodBuilder.SetCustomAttribute(CreateAttribute<HttpDeleteAttribute>());
 
             return this;
         }
 
         public ActionBuilder AddODataRoute(string route)
         {
-            _methodBuilder.SetCustomAttribute(CreateAttribute<ODataRouteAttribute>(route));
+            MethodBuilder.SetCustomAttribute(CreateAttribute<ODataRouteAttribute>(route));
 
             return this;
         }
 
         public ActionBuilder AddSwaggerResponse(HttpStatusCode status, string description = null, Type returnType = null)
         {
-            _methodBuilder.SetCustomAttribute(CreateAttribute<SwaggerResponseAttribute>(                
+            MethodBuilder.SetCustomAttribute(CreateAttribute<SwaggerResponseAttribute>(                
                 new object[] { status, description, returnType }));
 
             return this;
@@ -73,14 +67,14 @@ namespace ODataRuntime.Builders
 
         public ActionBuilder AddResponseType(Type type)
         {
-            _methodBuilder.SetCustomAttribute(CreateAttribute<ResponseTypeAttribute>(type));
+            MethodBuilder.SetCustomAttribute(CreateAttribute<ResponseTypeAttribute>(type));
 
             return this;
         }
 
         public ActionBuilder AddParameter(int order, string name)
         {
-            _methodBuilder.DefineParameter(order, ParameterAttributes.In, name);
+            MethodBuilder.DefineParameter(order, ParameterAttributes.In, name);
 
             return this;
         }

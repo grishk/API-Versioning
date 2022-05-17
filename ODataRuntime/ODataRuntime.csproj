@@ -126,8 +126,9 @@
     <Compile Include="Builders\ActionBuilderFromBaseMethod.cs" />
     <Compile Include="Builders\ActionBuilderFromDelegate.cs" />
     <Compile Include="Builders\AssemblyBuilder.cs" />
-    <Compile Include="Builders\TypeBuilderHelper.cs" />
     <Compile Include="Builders\ControllerBuilder.cs" />
+    <Compile Include="Builders\Helpers\AttributeHelper.cs" />
+    <Compile Include="Builders\Helpers\TypeBuilderHelper.cs" />
     <Compile Include="Builders\ODataControllerBuilder.cs" />
     <Compile Include="Controllers\BaseEntityODataController.cs" />
     <Compile Include="Controllers\BaseEntityODataControllerInt.cs" />

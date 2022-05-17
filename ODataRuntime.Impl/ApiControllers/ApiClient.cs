@@ -18,7 +18,5 @@ namespace ODataRuntime.Impl.ApiControllers
                 .AddResponseType(typeof(Client))
                 .AddSwaggerResponse(HttpStatusCode.OK, "Client by Id", typeof(Client));
         }
-
-        public ApiClient(AssemblyBuilder assemblyBuilder) : base(assemblyBuilder) { }
     }
 }

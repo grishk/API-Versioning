@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Reflection.Emit;
 using Microsoft.AspNet.OData;
+using static ODataRuntime.Builders.AttributeHelper;
 
 namespace ODataRuntime.Builders
 {
@@ -18,7 +19,7 @@ namespace ODataRuntime.Builders
                 .Select(p => p.ParameterType)
                 .ToArray();
 
-            _methodBuilder = controllerBuilder.CreateActionBuilder(actioName, returnType, parameters);
+            MethodBuilder = controllerBuilder.CreateActionBuilder(actioName, returnType, parameters);
             SetBaseMethod();
         }
 
@@ -26,14 +27,14 @@ namespace ODataRuntime.Builders
         {
             var prms = _BaseMethodInfo.GetParameters();
 
-            var generator = _methodBuilder.GetILGenerator();
+            var generator = MethodBuilder.GetILGenerator();
 
             generator.Emit(OpCodes.Ldarg_0);
 
             for (var i = 0; i < prms.Length; i++)
             {
                 var prm = prms[i];
-                var paramInfo = _methodBuilder.DefineParameter(i + 1, ParameterAttributes.In, prm.Name);
+                var paramInfo = MethodBuilder.DefineParameter(i + 1, ParameterAttributes.In, prm.Name);
 
                 if (prm.Name.Equals("key") || prm.Name.Equals("id"))
                 {

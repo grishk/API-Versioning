@@ -14,9 +14,5 @@ namespace ODataRuntime.Impl.ApiControllers
             controllerBuilder.AddVersion("7");
             RegisterGet();
         }
-
-       
-
-        public ManagerApi(AssemblyBuilder assemblyBuilder) : base(assemblyBuilder) { }
     }
 }
