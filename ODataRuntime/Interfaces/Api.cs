@@ -16,6 +16,10 @@ namespace ODataRuntime.Interfaces {
             _ControllerBaseType = baseType;
         }
 
+        /// <summary>
+        /// ControllerBuilder has sense only inside this func
+        /// </summary>
+        /// <param name="assemblyBuilder"></param>
         public void Create(AssemblyBuilder assemblyBuilder) {
             using (ControllerBuilder = new ControllerBuilder(assemblyBuilder, _ControllerName, _ControllerBaseType)) {
                 Register(ControllerBuilder);
@@ -23,6 +27,10 @@ namespace ODataRuntime.Interfaces {
             }
         }
 
+        /// <summary>
+        /// should be overloaded 
+        /// </summary>
+        /// <param name="controllerBuilder">TODO - should be replaced by ControllerBuilder</param>
         public abstract void Register(ControllerBuilder controllerBuilder);
     }
 

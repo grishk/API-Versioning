@@ -20,27 +20,30 @@ namespace ODataRuntime.Builders.Helpers {
                     continue;
                 }
 
-                ConstructorBuilder ctor = CreateCtorBuilder(builder, parameters, constructor);
-
-                ILGenerator emitter = ctor.GetILGenerator();
-                emitter.Emit(OpCodes.Nop);
-                // Load `this` and call base constructor with arguments
-                emitter.Emit(OpCodes.Ldarg_0);
-
-                for (var i = 1; i <= parameters.Length; ++i) {
-                    emitter.Emit(OpCodes.Ldarg, i);
-                }
-
-                emitter.Emit(OpCodes.Call, constructor);
-                emitter.Emit(OpCodes.Ret);
+                ConstructorBuilder ctor = builder.CreateCtorBuilder(parameters, constructor);
+                ctor.GenerateILCode(parameters, constructor);
             }
+        }
+
+        private static void GenerateILCode(this ConstructorBuilder ctor, ParameterInfo[] parameters, ConstructorInfo constructor) {
+            ILGenerator emitter = ctor.GetILGenerator();
+            emitter.Emit(OpCodes.Nop);
+            // Load `this` and call base constructor with arguments
+            emitter.Emit(OpCodes.Ldarg_0);
+
+            for (var i = 1; i <= parameters.Length; ++i) {
+                emitter.Emit(OpCodes.Ldarg, i);
+            }
+
+            emitter.Emit(OpCodes.Call, constructor);
+            emitter.Emit(OpCodes.Ret);
         }
 
         private static bool IsToBeSkipped(ParameterInfo[] parameters) {
             return parameters.Length > 0 && parameters.Last().IsDefined(typeof(ParamArrayAttribute), false);
         }
 
-        private static ConstructorBuilder CreateCtorBuilder(TypeBuilder builder, ParameterInfo[] parameters, ConstructorInfo constructor) {
+        private static ConstructorBuilder CreateCtorBuilder(this TypeBuilder builder, ParameterInfo[] parameters, ConstructorInfo constructor) {
             Type[] parameterTypes = parameters.Select(p => p.ParameterType).ToArray();
             Type[][] requiredCustomModifiers = parameters.Select(p => p.GetRequiredCustomModifiers()).ToArray();
             Type[][] optionalCustomModifiers = parameters.Select(p => p.GetOptionalCustomModifiers()).ToArray();

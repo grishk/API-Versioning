@@ -11,18 +11,17 @@ namespace ODataRuntime.Builders
 
         private static int _Counter;
         private readonly List<Api> _Container = new List<Api>();
-        public AssemblyBuilder AssemblyBuilder { get; }
+        private readonly AssemblyBuilder _AssemblyBuilder;
 
         public ApiBuilder(string assemblyName = null)
         {
-            
             if (string.IsNullOrWhiteSpace(assemblyName))
             {
                 int next = Interlocked.Increment(ref _Counter);
                 assemblyName = $"{_DefaultAssemblyName}{next}";
             }
 
-            AssemblyBuilder = new AssemblyBuilder(assemblyName);
+            _AssemblyBuilder = new AssemblyBuilder(assemblyName);
         }
 
         public ApiBuilder AddApi(Api api) 
@@ -34,7 +33,7 @@ namespace ODataRuntime.Builders
 
         public ApiBuilder Build() 
         {
-            _Container.ForEach(api => api.Create(AssemblyBuilder));
+            _Container.ForEach(api => api.Create(_AssemblyBuilder));
             _Container.Clear();
 
             return this;
