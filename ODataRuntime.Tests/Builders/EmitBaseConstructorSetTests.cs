@@ -6,68 +6,27 @@ using ODataRuntime.Builders.Helpers;
 
 namespace ODataRuntime.Tests.Builders {
     [TestFixture]
-    public class EmitBaseConstructorSetTests {
+    public class DynamicTypeConstructorTest {
+        
         [Test]
-        public void EmitEmptyBaseConstructorTest() {
-            Type runtimeType = CreateRuntimeMockType();
+        public void CreatedChildClassHasAllConstructorsFromBase() {
+            TypeBuilder typeBuilder = InitRuntimeMockType();
 
-            ConstructorInfo constructorInfo = GetMockTypeConstructor(runtimeType);
-
-            Assert.IsNotNull(constructorInfo);
+            Type runtimeType = CreateChildType(typeBuilder, typeof(MockBase));
+     
+            Assert.IsNotNull(GetMockTypeConstructor(runtimeType));
+            Assert.IsNotNull(GetMockTypeConstructor(runtimeType, typeof(int)));
+            Assert.IsNotNull(GetMockTypeConstructor(runtimeType, typeof(string)));
+            Assert.IsNotNull(GetMockTypeConstructor(runtimeType, typeof(int?)));
+            Assert.IsNotNull(GetMockTypeConstructor(runtimeType, typeof(int), typeof(string), typeof(int?)));
+            Assert.IsNull(GetMockTypeConstructor(runtimeType, typeof(decimal)));
         }
-
-        [Test]
-        public void EmitIntBaseConstructorTest() {
-            Type runtimeType = CreateRuntimeMockType();
-
-            ConstructorInfo constructorInfo = GetMockTypeConstructor(runtimeType, typeof(int));
-
-            Assert.IsNotNull(constructorInfo);
-        }
-
-        [Test]
-        public void EmitObjectBaseConstructorTest() {
-            Type runtimeType = CreateRuntimeMockType();
-
-            ConstructorInfo constructorInfo = GetMockTypeConstructor(runtimeType, typeof(string));
-
-            Assert.IsNotNull(constructorInfo);
-        }
-
-        [Test]
-        public void EmitNullableBaseConstructorTest() {
-            Type runtimeType = CreateRuntimeMockType();
-
-            ConstructorInfo constructorInfo = GetMockTypeConstructor(runtimeType, typeof(int?));
-
-            Assert.IsNotNull(constructorInfo);
-        }
-
-        [Test]
-        public void EmitMultiParamBaseConstructorTest() {
-            Type runtimeType = CreateRuntimeMockType();
-
-            ConstructorInfo constructorInfo = GetMockTypeConstructor(runtimeType, typeof(int), typeof(string), typeof(int?));
-
-            Assert.IsNotNull(constructorInfo);
-        }
-
-        [Test]
-        public void NotEmitDecimalBaseConstructorTest() {
-            Type runtimeType = CreateRuntimeMockType();
-
-            ConstructorInfo constructorInfo = GetMockTypeConstructor(runtimeType, typeof(decimal));
-
-            Assert.IsNull(constructorInfo);
-        }
-
 
         private static ConstructorInfo GetMockTypeConstructor(Type type, params Type[] args) {
-            ConstructorInfo constructorInfo = type.GetConstructor(args);
-            return constructorInfo;
+            return type.GetConstructor(args);
         }
 
-        private static Type CreateRuntimeMockType() {
+        private static TypeBuilder InitRuntimeMockType() {
             const string name = "MockAssembly";
             const string objectName = "MockObject";
 
@@ -75,11 +34,12 @@ namespace ODataRuntime.Tests.Builders {
             AssemblyBuilder assemblyBuilder =
                 AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
             ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule($"{name}.dll", true);
-            TypeBuilder typeBuilder = moduleBuilder.DefineType(objectName,
-                                                               TypeAttributes.Public | TypeAttributes.Sealed | TypeAttributes.Class);
-            Type baseType = typeof(MockBase);
-            typeBuilder.SetParent(baseType);
-            typeBuilder.CreatePassThroughConstructors(baseType);
+            return moduleBuilder.DefineType(objectName, TypeAttributes.Public | TypeAttributes.Sealed | TypeAttributes.Class);
+        }
+
+        private static Type CreateChildType(TypeBuilder typeBuilder, Type parent) {
+            typeBuilder.SetParent(parent);
+            typeBuilder.CreatePassThroughConstructors(parent);
             Type runtimeType = typeBuilder.CreateType();
             return runtimeType;
         }

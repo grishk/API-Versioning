@@ -7,7 +7,7 @@ using ODataRuntime.Interfaces;
 namespace ODataRuntime.Impl.ApiControllers
 {
     public class ManagerApi : ModelApi<Manager>
-    {
+    { 
         public override void Register(ControllerBuilder controllerBuilder)
         {
             SetDefaultRoute();

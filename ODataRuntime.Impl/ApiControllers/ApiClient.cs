@@ -6,7 +6,7 @@ using System.Net.Http;
 
 namespace ODataRuntime.Impl.ApiControllers
 {
-    public class ApiClient : ModelApi<Client>
+    public class ClientApi : ModelApi<Client>
     {
         public override void Register(ControllerBuilder controllerBuilder)
         {

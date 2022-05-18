@@ -48,7 +48,7 @@ namespace SelfHost2 {
 
             new ODataRuntime.Builders.ApiBuilder()
                 .ConfigureApiBuilder(b => {
-                    b.AddApi(new ApiClient());
+                    b.AddApi(new ClientApi());
                     b.AddApi(new ApiSite());
                     b.AddApi(new ClientFeeApi());
                     b.AddApi(new ManagerApi());
