@@ -26,16 +26,9 @@ namespace ODataRuntime.Builders
             _ModuleBuilder = assemblyBuilder.DefineDynamicModule(_Name + ".dll", true);
         }
 
-        public TypeBuilder CreateTypeBuilder(string sufixName, TypeAttributes attr) 
+        public TypeBuilder CreateTypeBuilder(string suffixName, TypeAttributes attr) 
         {
-            return _ModuleBuilder.DefineType($"{_ModuleBuilder.Assembly.GetName().Name}{sufixName}", attr);
-        }
-
-        public static AssemblyBuilder CreateAssebly(string name)
-        {
-            var ret = new AssemblyBuilder(name);
-            ret.Initialize();
-            return ret;
+            return _ModuleBuilder.DefineType($"{_ModuleBuilder.Assembly.GetName().Name}{suffixName}", attr);
         }
     }
 }

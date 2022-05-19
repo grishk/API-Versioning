@@ -8,14 +8,14 @@ namespace ODataRuntime.Services
     {
         protected override int NewKey()
         {
-            lock (lockEntitis)
+            lock (LockEntities)
             {
-                if (entitis.Count == 0) 
+                if (Entities.Count == 0) 
                 {
                     return 1;
                 }
                 
-                return entitis.Keys.Max() + 1;
+                return Entities.Keys.Max() + 1;
             }
         }
     }

@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Reflection.Emit;
 using Microsoft.AspNet.OData;
-using static ODataRuntime.Builders.AttributeHelper;
+using static ODataRuntime.Builders.Helpers.AttributeHelper;
 
 namespace ODataRuntime.Builders
 {

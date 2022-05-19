@@ -8,19 +8,19 @@ using ODataRuntime.Models;
 namespace ODataRuntime.Services {
     public abstract class BaseEntityService<TKey, TEntity> : IEntityService<TKey, TEntity>
         where TEntity: BaseEntity<TKey> {
-        protected Dictionary<TKey, TEntity> entitis = new Dictionary<TKey, TEntity>();
-        protected object lockEntitis = new object();
+        protected Dictionary<TKey, TEntity> Entities = new Dictionary<TKey, TEntity>();
+        protected object LockEntities = new object();
 
         public Task<bool> Delete(TKey key) {
-            lock (lockEntitis) {
-                return Task.FromResult(entitis.Remove(key));
+            lock (LockEntities) {
+                return Task.FromResult(Entities.Remove(key));
             }
         }
 
         public Task<TEntity> Get(TKey key) {
-            lock (lockEntitis) {
-                if (entitis.ContainsKey(key)) {
-                    return Task.FromResult(entitis[key]);
+            lock (LockEntities) {
+                if (Entities.ContainsKey(key)) {
+                    return Task.FromResult(Entities[key]);
                 }
 
                 return Task.FromResult(null as TEntity);
@@ -28,15 +28,15 @@ namespace ODataRuntime.Services {
         }
 
         public IQueryable<TEntity> Get() {
-            lock (lockEntitis) {
-                return entitis.Values.ToArray().AsQueryable();
+            lock (LockEntities) {
+                return Entities.Values.ToArray().AsQueryable();
             }
         }
 
         public Task<TEntity> Patch(TKey key, Delta<TEntity> data) {
-            lock (lockEntitis) {
-                if (entitis.ContainsKey(key)) {
-                    TEntity entity = entitis[key];
+            lock (LockEntities) {
+                if (Entities.ContainsKey(key)) {
+                    TEntity entity = Entities[key];
                     data.Patch(entity);
                     return Task.FromResult(entity);
                 }
@@ -46,9 +46,9 @@ namespace ODataRuntime.Services {
         }
 
         public Task<TEntity> Post(TEntity entity) {
-            lock (lockEntitis) {
+            lock (LockEntities) {
                 entity.Key = NewKey();
-                entitis.Add(entity.Key, entity);
+                Entities.Add(entity.Key, entity);
             }
 
             return Task.FromResult(entity);
@@ -59,8 +59,8 @@ namespace ODataRuntime.Services {
                 return Post(entity);
             }
 
-            lock (lockEntitis) {
-                entitis[entity.Key] = entity;
+            lock (LockEntities) {
+                Entities[entity.Key] = entity;
             }
 
             return Task.FromResult(entity);
