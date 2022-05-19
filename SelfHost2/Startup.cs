@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using ODataRuntime.Impl.ApiControllers;
+using SelfHost2.Models.Filters;
 using SeparateControllers.Models;
 using Swashbuckle.Application;
 
@@ -135,13 +136,15 @@ namespace SelfHost2 {
                                 }
 
                                 info.Version(group.Name, $"Sample API {group.ApiVersion}")
-                                    .Contact(c => c.Name("Bill Mei").Email("bill.mei@somewhere.com"))
+                                    .Contact(c => c.Name("SimCorp").Email("administrators@simcorp.com"))
                                     .Description(description)
                                     .License(l => l.Name("MIT").Url("https://opensource.org/licenses/MIT"))
                                     .TermsOfService("Shareware");
                             }
                         });
 
+                    // add query parameter
+                    swagger.OperationFilter<QueryOperationFiler>();
                     // add a custom operation filter which documents the implicit API version parameter
                     swagger.OperationFilter<SwaggerDefaultValues>();
 

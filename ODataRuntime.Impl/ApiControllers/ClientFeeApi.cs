@@ -7,8 +7,8 @@ using System.Net.Http;
 namespace ODataRuntime.Impl.ApiControllers
 {
     public class ClientFeeApi : UnboundApi {
-        private const string _ControllerName = "ClientFee";
-        public ClientFeeApi() : base(_ControllerName) { }
+        private const string _ApiName = "ClientFee";
+        public ClientFeeApi() : base(_ApiName) { }
 
         public override void Register(ControllerBuilder controllerBuilder)
         {

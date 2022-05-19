@@ -1,41 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Owin.Hosting;
 
-namespace SelfHost2
-{
-    class Program
-    {
-        const string Url = "http://localhost:9009/";
-        const string LaunchUrl = Url + "swagger";
-        static readonly ManualResetEvent resetEvent = new ManualResetEvent(false);
+namespace SelfHost2 {
+    internal class Program {
+        private const string _Url = "http://localhost:9009/";
+        private const string _LaunchUrl = _Url + "swagger";
+        private static readonly ManualResetEvent _ResetEvent = new ManualResetEvent(false);
 
-        static void Main(string[] args)
-        {
+        private static void Main(string[] args) {
             Console.CancelKeyPress += OnCancel;
 
-            using (WebApp.Start<Startup>(Url))
-            {
+            using (WebApp.Start<Startup>(_Url)) {
                 Console.WriteLine("Content root path: " + Startup.ContentRootPath);
-                Console.WriteLine("Now listening on: " + Url);
+                Console.WriteLine("Now listening on: " + _Url);
                 Console.WriteLine("Application started. Press Ctrl+C to shut down.");
-                Process.Start(LaunchUrl);
-                resetEvent.WaitOne();
+                Process.Start(_LaunchUrl);
+                _ResetEvent.WaitOne();
             }
 
             Console.CancelKeyPress -= OnCancel;
         }
 
-        static void OnCancel(object sender, ConsoleCancelEventArgs e)
-        {
+        private static void OnCancel(object sender, ConsoleCancelEventArgs e) {
             Console.Write("Application is shutting down...");
             e.Cancel = true;
-            resetEvent.Set();
+            _ResetEvent.Set();
         }
     }
 }
