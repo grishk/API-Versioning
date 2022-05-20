@@ -15,7 +15,7 @@ namespace ODataRuntime.Impl.ApiControllers
             var actionBuilderGet = new ActionBuilderFromBaseMethod(controllerBuilder, "Get", "DoGet");
             actionBuilderGet
                 .AddHttpVerb(HttpMethod.Get)
-                .AddResponseType(typeof(Client))
+                .SetResponseType(typeof(Client))
                 .AddSwaggerResponse(HttpStatusCode.OK, "Client by Id", typeof(Client));
         }
     }

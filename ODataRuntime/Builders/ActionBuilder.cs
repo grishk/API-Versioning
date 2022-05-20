@@ -44,7 +44,7 @@ namespace ODataRuntime.Builders {
             return this;
         }
 
-        public ActionBuilder AddODataRoute(string route) {
+        public ActionBuilder SetODataRoute(string route) {
             MethodBuilder.SetCustomAttribute(CreateAttribute<ODataRouteAttribute>(route));
 
             return this;
@@ -56,21 +56,15 @@ namespace ODataRuntime.Builders {
             return this;
         }
 
-        public ActionBuilder AddResponseType(Type type) {
+        public ActionBuilder SetResponseType(Type type) {
             MethodBuilder.SetCustomAttribute(CreateAttribute<ResponseTypeAttribute>(type));
 
             return this;
         }
 
-        public ActionBuilder AddParameter(int order, string name) {
-            MethodBuilder.DefineParameter(order, ParameterAttributes.In, name);
-
-            return this;
-        }
-
-        protected static int AddDelegate(Delegate dlgt) {
+        protected static int AddDelegate(Delegate @delegate) {
             lock (_DelegateLock) {
-                _Delegates.Add(dlgt);
+                _Delegates.Add(@delegate);
                 return _Delegates.Count - 1;
             }
         }

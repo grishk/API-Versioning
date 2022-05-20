@@ -14,7 +14,7 @@ namespace ODataRuntime.Interfaces {
             var result = new ActionBuilderFromBaseMethod(ControllerBuilder, "Get", "DoGet");
             result
                 .AddHttpVerb(HttpMethod.Get)
-                .AddResponseType(typeof(TModel))
+                .SetResponseType(typeof(TModel))
                 .AddSwaggerResponse(HttpStatusCode.OK, typeof(TModel).Name + " by Id", typeof(TModel));
             return result;
         }

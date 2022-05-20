@@ -15,13 +15,13 @@ namespace ODataRuntime.Impl.ApiControllers {
             var actionBuilderGet = new ActionBuilderFromBaseMethod(controllerBuilder, "Get", "DoGet");
             actionBuilderGet
                 .AddHttpVerb(HttpMethod.Get)
-                .AddResponseType(typeof(Site))
+                .SetResponseType(typeof(Site))
                 .AddSwaggerResponse(HttpStatusCode.OK, "Site by Id", typeof(Site));
 
             var actionBuilderPost = new ActionBuilderFromBaseMethod(controllerBuilder, "Post", "DoPost");
             actionBuilderPost
                 .AddHttpVerb(HttpMethod.Post)
-                .AddResponseType(typeof(Site))
+                .SetResponseType(typeof(Site))
                 .AddSwaggerResponse(HttpStatusCode.OK, "Add Site", typeof(Site));
 
             Func<int, EntityServiceKeyInt<Site>, Task<double>> count = async (key, srv) => {
@@ -37,8 +37,8 @@ namespace ODataRuntime.Impl.ApiControllers {
             var actionBuilderCount = new ActionBuilderFromDelegate(controllerBuilder, "Counter", count);
             actionBuilderCount
                 .AddHttpVerb(HttpMethod.Get)
-                .AddODataRoute("({key})/Counter")
-                .AddResponseType(typeof(double))
+                .SetODataRoute("({key})/Counter")
+                .SetResponseType(typeof(double))
                 .AddSwaggerResponse(HttpStatusCode.OK, "Get Site counter", typeof(double));
         }
     }

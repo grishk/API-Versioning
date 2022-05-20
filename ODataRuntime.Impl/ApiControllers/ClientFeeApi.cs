@@ -18,8 +18,8 @@ namespace ODataRuntime.Impl.ApiControllers
             var actionBuilderGetFee = new ActionBuilderFromDelegate(controllerBuilder, "GetClientFee", getClientFee);
             actionBuilderGetFee
                 .AddHttpVerb(HttpMethod.Get)
-                .AddResponseType(typeof(decimal))
-                .AddODataRoute("GetClientFee(ClientId={clientId})")
+                .SetResponseType(typeof(decimal))
+                .SetODataRoute("GetClientFee(ClientId={clientId})")
                 .AddSwaggerResponse(HttpStatusCode.OK, "Gets Client Fee by ClientId", typeof(decimal));
         }
     }

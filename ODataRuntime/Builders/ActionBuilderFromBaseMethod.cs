@@ -10,16 +10,16 @@ namespace ODataRuntime.Builders
     {
         private readonly MethodInfo _BaseMethodInfo;
 
-        public ActionBuilderFromBaseMethod(ControllerBuilder controllerBuilder, string actioName, string methodName)
+        public ActionBuilderFromBaseMethod(ControllerBuilder controllerBuilder, string actionName, string baseMethodName)
         {
             _BaseMethodInfo = controllerBuilder.BaseControllerType
-                .GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance); ;
+                .GetMethod(baseMethodName, BindingFlags.NonPublic | BindingFlags.Instance); 
             var returnType = _BaseMethodInfo.ReturnType;
             var parameters = _BaseMethodInfo.GetParameters()
                 .Select(p => p.ParameterType)
                 .ToArray();
 
-            MethodBuilder = controllerBuilder.CreateActionBuilder(actioName, returnType, parameters);
+            MethodBuilder = controllerBuilder.CreateActionBuilder(actionName, returnType, parameters);
             SetBaseMethod();
         }
 
