@@ -21,12 +21,13 @@ namespace ODataRuntime.Tests.Builders {
             var assemblyBuilder = new AssemblyBuilder(name);
 
             using (var controllerBuilder = new ControllerBuilder(assemblyBuilder, name, typeof(ParentClassStub))) {
-                _ = new ActionBuilderFromBaseMethod(controllerBuilder, actionName, ParentClassStub.GetOneMethodName);
+                _ = new ActionBuilderFromBaseMethod(controllerBuilder, actionName, ParentClassStub.TestMethodName);
             }
 
             Type controllerType = ReflectionHelper.FindCreatedType(name);
             MethodInfo methodInfo = ReflectionHelper.FindMethodInfo(controllerType, actionName);
-            MethodInfo baseMethodInfo = ReflectionHelper.FindMethodInfo(typeof(ParentClassStub), ParentClassStub.GetOneMethodName);
+            MethodInfo baseMethodInfo = ReflectionHelper.FindMethodInfo(typeof(ParentClassStub), ParentClassStub.TestMethodName);
+
             Assert.IsNotNull(methodInfo);
             Assert.IsTrue(methodInfo.ReturnType == baseMethodInfo.ReturnType);
             Assert.IsTrue(methodInfo.GetParameters().SequenceEqual(baseMethodInfo.GetParameters(), new ParameterInfoComparer()));
@@ -40,7 +41,7 @@ namespace ODataRuntime.Tests.Builders {
             var assemblyBuilder = new AssemblyBuilder(name);
 
             using (var controllerBuilder = new ControllerBuilder(assemblyBuilder, name, typeof(ParentClassStub))) {
-                var actionBuilder = new ActionBuilderFromBaseMethod(controllerBuilder, actionName, ParentClassStub.GetOneMethodName);
+                var actionBuilder = new ActionBuilderFromBaseMethod(controllerBuilder, actionName, ParentClassStub.TestMethodName);
                 actionBuilder.AddHttpVerb(HttpMethod.Get);
             }
 
@@ -49,9 +50,9 @@ namespace ODataRuntime.Tests.Builders {
             HttpGetAttribute[] attrs = ReflectionHelper.FindAttributeList<HttpGetAttribute>(methodInfo);
 
             Assert.IsTrue(attrs.Length == 1);
-            Assert.IsTrue(attrs[0].HttpMethods.SequenceEqual(new []{ HttpMethod.Get }));
+            Assert.IsTrue(attrs[0].HttpMethods.SequenceEqual(new[] { HttpMethod.Get }));
         }
-        
+
         [Test]
         public void SetODataRouteAttributeTest() {
             const string actionName = "GetChildName";
@@ -61,7 +62,7 @@ namespace ODataRuntime.Tests.Builders {
             var assemblyBuilder = new AssemblyBuilder(name);
 
             using (var controllerBuilder = new ControllerBuilder(assemblyBuilder, name, typeof(ParentClassStub))) {
-                var actionBuilder = new ActionBuilderFromBaseMethod(controllerBuilder, actionName, ParentClassStub.GetOneMethodName);
+                var actionBuilder = new ActionBuilderFromBaseMethod(controllerBuilder, actionName, ParentClassStub.TestMethodName);
                 actionBuilder.SetODataRoute(routeValue);
             }
 
@@ -69,7 +70,7 @@ namespace ODataRuntime.Tests.Builders {
             MethodInfo methodInfo = ReflectionHelper.FindMethodInfo(controllerType, actionName);
             ODataRouteAttribute[] attrs = ReflectionHelper.FindAttributeList<ODataRouteAttribute>(methodInfo);
 
-            Assert.IsTrue(attrs.Select(a=>a.PathTemplate).SequenceEqual(new[] { routeValue }));
+            Assert.IsTrue(attrs.Select(a => a.PathTemplate).SequenceEqual(new[] { routeValue }));
         }
 
         [Test]
@@ -81,7 +82,7 @@ namespace ODataRuntime.Tests.Builders {
             var assemblyBuilder = new AssemblyBuilder(name);
 
             using (var controllerBuilder = new ControllerBuilder(assemblyBuilder, name, typeof(ParentClassStub))) {
-                var actionBuilder = new ActionBuilderFromBaseMethod(controllerBuilder, actionName, ParentClassStub.GetOneMethodName);
+                var actionBuilder = new ActionBuilderFromBaseMethod(controllerBuilder, actionName, ParentClassStub.TestMethodName);
                 actionBuilder.SetResponseType(responseType);
             }
 
@@ -98,12 +99,12 @@ namespace ODataRuntime.Tests.Builders {
             const string description = "Description";
 
             Type responseType = typeof(string);
-            HttpStatusCode responseCode = HttpStatusCode.OK;
+            var responseCode = HttpStatusCode.OK;
             string name = ReflectionHelper.GetUniqueAssemblyName(MethodBase.GetCurrentMethod());
             var assemblyBuilder = new AssemblyBuilder(name);
 
             using (var controllerBuilder = new ControllerBuilder(assemblyBuilder, name, typeof(ParentClassStub))) {
-                var actionBuilder = new ActionBuilderFromBaseMethod(controllerBuilder, actionName, ParentClassStub.GetOneMethodName);
+                var actionBuilder = new ActionBuilderFromBaseMethod(controllerBuilder, actionName, ParentClassStub.TestMethodName);
                 actionBuilder.AddSwaggerResponse(responseCode, description, responseType);
             }
 
@@ -117,10 +118,10 @@ namespace ODataRuntime.Tests.Builders {
         }
 
         /// <summary>
-        /// Stub class to be parent
+        ///     Stub class to be parent
         /// </summary>
         public class ParentClassStub {
-            public static string GetOneMethodName => nameof(GetName);
+            public static string TestMethodName => nameof(GetName);
 
             private string GetName(int i, string s) {
                 return $"{i} {s}";
