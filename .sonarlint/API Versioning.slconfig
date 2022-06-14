@@ -1,0 +1,12 @@
+{
+  "ServerUri": "https://simcorpsonarqube.azurewebsites.net/",
+  "Organization": null,
+  "ProjectKey": "IMS-CSharp",
+  "ProjectName": "IMS-CSharp",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AW0BgOSTUj7q3v8ylkAU",
+      "ProfileTimestamp": "2021-09-22T14:35:22Z"
+    }
+  }
+}
