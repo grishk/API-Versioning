@@ -1,39 +1,34 @@
-﻿using Autofac;
+﻿using Asp.Versioning.OData;
 using ODataRuntime.Impl.ApiControllers;
 using SelfHost2.Models.Filters;
 using SeparateControllers.Models;
 using Swashbuckle.Application;
 
-namespace SelfHost2 {
-    using global::Owin;
-    using Microsoft.AspNet.OData;
-    using Microsoft.AspNet.OData.Builder;
-    using Microsoft.AspNet.OData.Extensions;
-    using Microsoft.AspNet.OData.Routing;
-    using Microsoft.OData;
-    using Microsoft.OData.UriParser;
-    using Newtonsoft.Json.Serialization;
-    using ODataRuntime.Impl.Models;
-    using SelfHost2.Models;
-    using SeparateControllers.DynamicControllers;
-    using System;
-    using System.IO;
-    using System.Reflection;
-    using System.Web.Http;
-    using System.Web.Http.Description;
-    using System.Web.Http.Dispatcher;
-    using System.Web.Http.ExceptionHandling;
-    using static Microsoft.OData.ODataUrlKeyDelimiter;
-    using static Microsoft.OData.ServiceLifetime;
+namespace SelfHost2
+{
+	using global::Owin;
+	using Microsoft.AspNet.OData;
+	using Microsoft.AspNet.OData.Extensions;
+	using Microsoft.AspNet.OData.Routing;
+	using Microsoft.OData;
+	using Microsoft.OData.UriParser;
+	using Newtonsoft.Json.Serialization;
+	using SelfHost2.Models;
+	using SeparateControllers.DynamicControllers;
+	using System;
+	using System.IO;
+	using System.Reflection;
+	using System.Web.Http;
+	using System.Web.Http.Description;
+	using System.Web.Http.Dispatcher;
+	using System.Web.Http.ExceptionHandling;
+	using static Microsoft.OData.ODataUrlKeyDelimiter;
+	using static Microsoft.OData.ServiceLifetime;
 
-    /// <summary>
-    /// Represents the startup process for the application.
-    /// </summary>
-    public class Startup {
-        /// <summary>
-        /// Configures the application using the provided builder.
-        /// </summary>
-        /// <param name="builder">The current application builder.</param>
+	/// <summary>
+	/// Represents the startup process for the application.
+	/// </summary>
+	public class Startup {
         public void Configuration(IAppBuilder builder) {
             var configuration = new HttpConfiguration();
 
@@ -46,15 +41,6 @@ namespace SelfHost2 {
             // create dynamic controllers
             MarketControllerBuilder.Build();
             PingControllerBuilder.Build();
-
-            new ODataRuntime.Builders.ApiBuilder()
-                .ConfigureApiBuilder(b => {
-                    b.AddApi(new ClientApi());
-                    b.AddApi(new ApiSite());
-                    b.AddApi(new ClientFeeApi());
-                    b.AddApi(new ManagerApi());
-                })
-                .Build();
 
             // handling error
             configuration.Services.Replace(typeof(IExceptionHandler), new CustomExceptionHandler());
@@ -73,52 +59,19 @@ namespace SelfHost2 {
             var modelBuilder = new VersionedODataModelBuilder(configuration) {
                 ModelConfigurations =
                 {
-                    new AllConfigurations(),
-                    new AddressesConfiguration(),
-                    new DynamicConfiguration(),
-                    new ImplModelConfiguration()
-                    //new PersonModelConfiguration(),
-                    //new OrderModelConfiguration(),
-                    //new ProductConfiguration(),
-                    //new SupplierConfiguration(),
+					new AllConfigurations()
                 }
             };
             var models = modelBuilder.GetEdmModels();
 
-            //           model.VocabularyAnnotations.Add(new ApiVersionAttribute("1.0"));
-            // global odata query options
             configuration.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
 
-            // INFO: while you can use both, you should choose only ONE of the following; comment, uncomment, or remove as necessary
-
-            // WHEN VERSIONING BY: query string, header, or media type
             configuration.MapVersionedODataRoute("odata", "odata", models, ConfigureContainer);
 
-            // WHEN VERSIONING BY: url segment
-            // configuration.MapVersionedODataRoutes( "odata-bypath", "api/v{apiVersion}", models, ConfigureContainer );
-
-            // add the versioned IApiExplorer and capture the strongly-typed implementation (e.g. ODataApiExplorer vs IApiExplorer)
-            // note: the specified format code will format the version as "'v'major[.minor][-status]"
             var apiExplorer = configuration.AddODataApiExplorer(
                 options => {
                     options.GroupNameFormat = "'v'VVV";
-
-                    // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
-                    // can also be used to control the format of the API version in route templates
                     options.SubstituteApiVersionInUrl = true;
-
-                    //// configure query options (which cannot otherwise be configured by OData conventions)
-                    //options.QueryOptions.Controller<V2.PeopleController>()
-                    //                    .Action( c => c.Get( default ) )
-                    //                        .Allow( Skip | Count )
-                    //                        .AllowTop( 100 )
-                    //                        .AllowOrderBy( "firstName", "lastName" );
-
-                    //options.QueryOptions.Controller<V3.PeopleController>()
-                    //                    .Action( c => c.Get( default ) )
-                    //                        .Allow( Skip | Count )
-                    //                        .AllowTop( 100 )
-                    //                        .AllowOrderBy( "firstName", "lastName" );
                 });
 
             configuration.EnableSwagger(
@@ -136,7 +89,7 @@ namespace SelfHost2 {
                                 }
 
                                 info.Version(group.Name, $"Sample API {group.ApiVersion}")
-                                    .Contact(c => c.Name("SimCorp").Email("administrators@simcorp.com"))
+                                    .Contact(c => c.Name("corp").Email("administrators@corp.com"))
                                     .Description(description)
                                     .License(l => l.Name("MIT").Url("https://opensource.org/licenses/MIT"))
                                     .TermsOfService("Shareware");

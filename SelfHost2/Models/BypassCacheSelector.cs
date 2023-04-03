@@ -1,16 +1,13 @@
-﻿using Microsoft.Web.Http;
-using Microsoft.Web.Http.Dispatcher;
-using Microsoft.Web.Http.Versioning;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Dispatcher;
 
-namespace SelfHost2.Models {
-    public class BypassCacheSelector : DefaultHttpControllerSelector {
+namespace SelfHost2.Models
+{
+	public class BypassCacheSelector : DefaultHttpControllerSelector {
         private readonly HttpConfiguration _Configuration;
 
         public BypassCacheSelector(HttpConfiguration configuration)

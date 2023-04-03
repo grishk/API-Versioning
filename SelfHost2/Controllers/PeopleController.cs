@@ -1,22 +1,19 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNet.OData.Routing;
+﻿using Asp.Versioning;
 using SeparateControllers.HttpExtensions;
 using SeparateControllers.Models;
-using Swashbuckle.Swagger;
 
 namespace SelfHost2.Controllers
 {
-    using Microsoft.AspNet.OData;
-    using Microsoft.AspNet.OData.Query;
-    using Microsoft.Web.Http;
-    using System.Linq;
-    using System.Web.Http;
-    using System.Web.Http.Description;
+	using Microsoft.AspNet.OData;
+	using Microsoft.AspNet.OData.Query;
 
-    /// <summary>
-    /// Represents a RESTful people service.
-    /// </summary>
-    [ApiVersion("0.2")]
+	using System.Linq;
+	using System.Web.Http;
+
+	/// <summary>
+	/// Represents a RESTful people service.
+	/// </summary>
+	[ApiVersion("0.2")]
     [ApiVersion("0.1", Deprecated = true)]
     public class PeopleController : ODataController
     {

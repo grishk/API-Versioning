@@ -21,13 +21,17 @@
     <AdditionalFiles Include="..\.sonarlint\ims-csharp\CSharp\SonarLint.xml" Link="SonarLint.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Asp.Versioning.WebApi" Version="7.0.0" />
+    <PackageReference Include="Asp.Versioning.WebApi.ApiExplorer" Version="7.0.0" />
+    <PackageReference Include="Asp.Versioning.WebApi.OData" Version="7.0.0" />
+    <PackageReference Include="Asp.Versioning.WebApi.OData.ApiExplorer" Version="7.0.0" />
     <PackageReference Include="Autofac.WebApi2.Owin" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNet.OData" Version="7.5.8" />
-    <PackageReference Include="Microsoft.AspNet.OData.Versioning" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNet.OData.Versioning.ApiExplorer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNet.OData" Version="7.5.18" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNet.WebApi.OwinSelfHost" Version="5.2.7" />
-    <PackageReference Include="Microsoft.OData.Core" Version="7.10.0" />
-    <PackageReference Include="Microsoft.OData.Edm" Version="7.10.0" />
+    <PackageReference Include="Microsoft.OData.Core" Version="7.13.0" />
+    <PackageReference Include="Microsoft.OData.Edm" Version="7.13.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
   </ItemGroup>
