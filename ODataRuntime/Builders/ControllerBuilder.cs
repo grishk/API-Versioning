@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Asp.Versioning;
+using Microsoft.AspNet.OData.Routing;
+using ODataRuntime.Builders.Helpers;
+using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using Microsoft.AspNet.OData.Routing;
-using Microsoft.Web.Http;
-using ODataRuntime.Builders.Helpers;
 using static ODataRuntime.Builders.Helpers.AttributeHelper;
 
-namespace ODataRuntime.Builders {
-    public class ControllerBuilder : IDisposable {
+namespace ODataRuntime.Builders
+{
+	public class ControllerBuilder : IDisposable {
         private const string _ControllerSuffix = ".EControllers";
 
         protected readonly TypeBuilder TypeBuilder;

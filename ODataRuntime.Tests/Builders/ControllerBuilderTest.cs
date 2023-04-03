@@ -1,13 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using Asp.Versioning;
 using Microsoft.AspNet.OData.Routing;
-using Microsoft.Web.Http;
 using NUnit.Framework;
 using ODataRuntime.Builders;
+using System;
+using System.Linq;
+using System.Reflection;
 
-namespace ODataRuntime.Tests.Builders {
-    [TestFixture]
+namespace ODataRuntime.Tests.Builders
+{
+	[TestFixture]
     public class ControllerBuilderTest {
         [Test]
         public void ControllerTypeCreationTest() {

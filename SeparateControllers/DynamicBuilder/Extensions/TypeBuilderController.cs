@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNet.OData.Routing;
-using Microsoft.Web.Http;
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
+using Asp.Versioning;
 
 namespace SeparateControllers.DynamicBuilder.Extensions
 {
-    public static class TypeBuilderController
+	public static class TypeBuilderController
     {
         private readonly static ConstructorInfo VersionConstructor = typeof(ApiVersionAttribute).GetConstructor(new[] { typeof(string) });
         private readonly static ConstructorInfo VersionNeutralConstructor = typeof(ApiVersionNeutralAttribute).GetConstructor(new Type[0]);

@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNet.OData.Builder;
-using Microsoft.Web.Http;
+﻿using Asp.Versioning;
+using Asp.Versioning.OData;
+using Microsoft.AspNet.OData.Builder;
 
 namespace ODataRuntime.Impl.Models
 {
-    public class ImplModelConfiguration : IModelConfiguration
+	public class ImplModelConfiguration : IModelConfiguration
     {
         public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
         {

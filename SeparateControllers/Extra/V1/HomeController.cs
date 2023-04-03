@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using Asp.Versioning;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
-using Microsoft.Web.Http;
-using SeparateControllers.Models;
 
 namespace SeparateControllers.Extra.V1
 {
-    [ApiVersion("1.0")]
+	[ApiVersion("1.0")]
     [ODataRoutePrefix("Home")]
     //[Route("api/v{version:apiVersion}/home/{?id}")]
     public class HomeController : ODataController

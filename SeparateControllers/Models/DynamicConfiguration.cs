@@ -1,18 +1,10 @@
-﻿using Microsoft.AspNet.OData.Builder;
-using Microsoft.AspNet.OData.Routing;
-using Microsoft.Web.Http;
-using SeparateControllers.Extra;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Web.Http.ModelBinding;
+﻿using Asp.Versioning;
+using Asp.Versioning.OData;
+using Microsoft.AspNet.OData.Builder;
 
 namespace SeparateControllers.Models
 {
-    public class DynamicConfiguration : IModelConfiguration
+	public class DynamicConfiguration : IModelConfiguration
     {
         public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
         {

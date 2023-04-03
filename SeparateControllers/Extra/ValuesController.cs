@@ -1,14 +1,10 @@
-﻿using Microsoft.Web.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using Asp.Versioning;
 
 namespace SeparateControllers.Extra
 {
-    [ApiVersion("3.0")]
+	[ApiVersion("3.0")]
     [ApiVersion("4.0")]
     [ApiVersion("5.0-alpha")]
     [Route("/api/value")]

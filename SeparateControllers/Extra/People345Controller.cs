@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using Microsoft.AspNet.OData;
+﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNet.OData.Routing;
-using Microsoft.Web.Http;
 using SeparateControllers.Models;
+using System.Collections.Generic;
+using System.Web.Http;
+using Asp.Versioning;
 
 namespace SeparateControllers.Extra
 {
-    [ApiVersion("3.0")]
+	[ApiVersion("3.0")]
     [ApiVersion("4.0")]
     [ApiVersion("5.0-alpha")]
     [ODataRoutePrefix("People")]

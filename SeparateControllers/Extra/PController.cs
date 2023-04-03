@@ -1,15 +1,16 @@
-﻿namespace Microsoft.Examples
-{
-    using Microsoft.AspNet.OData;
-    using Microsoft.AspNet.OData.Routing;
-    using Microsoft.Web.Http;
-    using System.Web.Http;
-    using System.Web.Http.Description;
+﻿using Asp.Versioning;
 
-    /// <summary>
-    /// Provides unbound, utility functions.
-    /// </summary>
-    [ApiVersionNeutral]
+namespace Microsoft.Examples
+{
+	using Microsoft.AspNet.OData;
+	using Microsoft.AspNet.OData.Routing;
+	using System.Web.Http;
+	using System.Web.Http.Description;
+
+	/// <summary>
+	/// Provides unbound, utility functions.
+	/// </summary>
+	[ApiVersionNeutral]
     public abstract class PController : ODataController
     {
         [HttpGet]

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNet.OData.Builder;
-using Microsoft.Web.Http;
-using SeparateControllers.Extra;
+﻿using Asp.Versioning;
+using Asp.Versioning.OData;
+using Microsoft.AspNet.OData.Builder;
 
 namespace SeparateControllers.Models
 {
-    public class AllConfigurations : IModelConfiguration
+	public class AllConfigurations : IModelConfiguration
     {
         public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
         {

@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNet.OData.Builder;
-using Microsoft.Web.Http;
+﻿using Asp.Versioning;
+using Asp.Versioning.OData;
+using Microsoft.AspNet.OData.Builder;
 using SeparateControllers.Extra;
 
 namespace SeparateControllers.Models
 {
-    public class AddressesConfiguration : IModelConfiguration
+	public class AddressesConfiguration : IModelConfiguration
     {
         public void Apply(ODataModelBuilder builder, ApiVersion apiVersion, string routePrefix)
         {

@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.OData" Version="7.5.8" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Versioning" Version="4.1.1" />
+    <PackageReference Include="Asp.Versioning.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Asp.Versioning.WebApi" Version="7.0.0" />
+    <PackageReference Include="Asp.Versioning.WebApi.ApiExplorer" Version="7.0.0" />
+    <PackageReference Include="Asp.Versioning.WebApi.OData" Version="7.0.0" />
+    <PackageReference Include="Asp.Versioning.WebApi.OData.ApiExplorer" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNet.OData" Version="7.5.18" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />

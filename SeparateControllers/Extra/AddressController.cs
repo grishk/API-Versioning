@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using Asp.Versioning;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Web.Http;
+using System.Linq;
+using System.Web.Http;
+
 
 
 namespace SeparateControllers.Extra
 {
-    [ApiVersion("1.0")]
+	[ApiVersion("1.0")]
     [ApiVersion("2.0")]
     [ODataRoutePrefix("addresses")]
     public class AddressController : ODataController

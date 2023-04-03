@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
-using Microsoft.Web.Http;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ using System.Web.Http.Description;
 
 namespace SeparateControllers.DynamicBuilder.Extensions
 {
-    public static class MethodBuilderController
+	public static class MethodBuilderController
     {
         private readonly static ConstructorInfo HttpGetConstructor = typeof(HttpGetAttribute).GetConstructor(Type.EmptyTypes);
         private readonly static ConstructorInfo HttpDeleteConstructor = typeof(HttpDeleteAttribute).GetConstructor(Type.EmptyTypes);

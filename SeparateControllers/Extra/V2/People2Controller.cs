@@ -1,14 +1,14 @@
-﻿using System.Web.Http;
-using Microsoft.AspNet.OData;
+﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNet.OData.Routing;
-using Microsoft.Web.Http;
 using SeparateControllers.Models;
+using System.Web.Http;
+using Asp.Versioning;
 
 namespace SeparateControllers.Extra.V2
 {
 
-    [ApiVersion("2.0")]
+	[ApiVersion("2.0")]
     [ODataRoutePrefix("People")]
     public class People2Controller : ODataController
     {
